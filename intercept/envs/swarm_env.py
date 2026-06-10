@@ -5,9 +5,9 @@ each decision step an ``N×M`` preference matrix; each living interceptor is ass
 preference living threat (a learned weapon-target assignment) and homes on it with True PN. The team
 reward rewards intercepts and penalizes leakers — so the policy must learn to *spread out and
 cooperate* (not all chase the same threat), the job the Hungarian allocator does analytically. This
-lets us compare **learned coordination vs. the optimization baseline** on identical dynamics
-(fairness invariant) at realistic comparable speeds (threats ~Mach 2, interceptors ~Mach 3 — no
-speed cheat). PN does the guidance, so there is no from-scratch-control collapse to paper over; the
+allows a comparison of **learned coordination vs. the optimization baseline** on identical dynamics
+(fairness invariant) at realistic comparable speeds (threats ~Mach 2, interceptors ~Mach 3 — a
+~1.45x closing edge). PN does the guidance, so there is no from-scratch-control collapse; the
 learned part is purely the cooperative allocation.
 """
 

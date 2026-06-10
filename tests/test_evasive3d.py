@@ -59,7 +59,7 @@ def test_combine_sums_commands():
 # --- realistic engagement (speed parity) -----------------------------------
 
 
-def test_advanced_engagement_intercepts_without_speed_cheat():
+def test_advanced_engagement_intercepts_at_speed_parity():
     from experiments.p14_advanced_evasion import NOMINAL, build
 
     eng, _ = build(NOMINAL)

@@ -9,7 +9,7 @@ Everything that was a hand-set constant at L2 now *emerges from physics* (ADR-00
   the transonic drag rise; plus **lift-induced drag** ``∝ C_L²`` (so turning costs energy, exactly).
 * **Lift / dynamic-pressure-limited turning** — the achievable lateral acceleration is
   ``min(structural limit, q·S·C_Lmax / m)``. Turn capability *falls* at low speed / high altitude
-  (low ``q``): the interceptor cannot simply pull arbitrary g — a real, no-cheat constraint.
+  (low ``q``): the interceptor cannot simply pull arbitrary g — a genuinely physical constraint.
 * First-order **autopilot lag**, gravity, and (only) the lateral command is achievable as lift.
 
 State ``[pos(n), vel(n), a_lat(n)]`` (n = 2 or 3; the last n are the achieved lateral acceleration

@@ -1,7 +1,7 @@
 """Generate animated engagement replays (GIFs) + filmstrip montages — watch the intercepts happen.
 
-Realistic comparable speeds (interceptor ~Mach 3, target ~Mach 2; only a ~1.45x edge — no speed
-cheat). Produces, in gallery/:
+Realistic comparable speeds (interceptor ~Mach 3, target ~Mach 2 — only a ~1.45x closing edge).
+Produces, in gallery/:
   * anim_pn_weaving.gif / .png   — True PN runs down a 15 g weaving target
   * anim_pn_vs_pursuit.gif       — PN leads & intercepts a crossing target while pure pursuit lags
   * anim_optimal_evader.gif/.png — PN vs the game-theoretic evader fleeing along the anti-LOS

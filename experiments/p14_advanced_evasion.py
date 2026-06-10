@@ -15,7 +15,7 @@ threat. The interceptor launches slow (~Mach 1.2) and boosts to ~Mach 3, then co
 to ~Mach 2.6 at the merge; the threat is a fast ~Mach 3 missile that bleeds to ~Mach 2 because hard
 maneuvering costs energy (induced drag) — leaving only a ~30–40 % closing-speed edge, typical of a
 real surface-to-air engagement against a supersonic threat. Shrink the interceptor's motor any
-further and it simply *misses*: it is flying on near-minimum energy, not a speed cheat. The
+further and it simply *misses*: it is flying on near-minimum energy, not a thrust surplus. The
 interceptor wins with **Augmented PN** — a predictive law that estimates the target's acceleration
 — by flying an efficient lead, not by overtaking. A robustness Monte-Carlo then perturbs the launch
 geometry and every maneuver parameter to show the intercept is not a single tuned shot.

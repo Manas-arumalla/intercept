@@ -92,7 +92,7 @@ def test_realistic_2d_intercept():
         kill_radius=20.0,
     ).run()
     assert res.intercepted
-    # No speed-cheat: the interceptor's peak speed is comparable to the target's, not 3x.
+    # Speed parity: the interceptor's peak speed is comparable to the target's, not 3x.
     peak = np.linalg.norm(res.states["interceptor"][:, 2:4], axis=1).max()
     assert 700.0 < peak < 1400.0
 
