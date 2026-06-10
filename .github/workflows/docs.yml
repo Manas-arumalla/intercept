@@ -1,7 +1,8 @@
 name: Deploy docs
 
-# Publishes the mkdocs-material site to GitHub Pages on every push to main.
-# (Enable Pages → "GitHub Actions" in the repository settings once the repo is on GitHub.)
+# Builds the mkdocs-material site on every push to main and publishes it to GitHub Pages.
+# The deploy job only runs on a public repository (Pages is unavailable on private repos);
+# enable Pages → "GitHub Actions" in the repository settings when making the repo public.
 
 on:
   push:
@@ -35,6 +36,7 @@ jobs:
 
   deploy:
     needs: build
+    if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages
