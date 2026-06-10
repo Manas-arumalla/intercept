@@ -137,6 +137,54 @@ Across six paradigms, three fidelity levels, 2-D and 3-D, single- and many-vs-ma
   <img src="gallery/figures/p4_law_comparison.png" width="49%" alt="Optimal / PN / sliding-mode / NMPC trade-off"/>
 </p>
 
+## Gallery — watch it work
+
+Every engagement below is produced by a script in [`experiments/`](experiments/) and rendered with
+the project's own dark/neon visualization layer. The full set lives in
+[`gallery/`](gallery/animations/).
+
+**Coordinated swarm penetration vs. the asset-value defense** — a decoy-screen saturation raid (left)
+and a simultaneous time-on-target raid (right). The defender predicts each track's impact point and
+spends its magazine only on the threats that actually endanger the asset.
+
+<p align="center">
+  <img src="gallery/animations/p35_swarm_penetration.gif" width="49%" alt="Asset-value defense defeating a decoy-screen saturation raid"/>
+  <img src="gallery/animations/p35_tot_raid.gif" width="49%" alt="Simultaneous time-on-target saturation raid being defended"/>
+</p>
+
+**3-D area defense and complex-trajectory evasion** — a 12-threat two-wave raid intercepted 12/12
+(left), and a single ~Mach 3 interceptor running down a lofted, spiralling threat on the full
+aero-propulsive plant (right).
+
+<p align="center">
+  <img src="gallery/animations/p7_swarm_defense.gif" width="49%" alt="Hungarian weapon-target assignment defending against a threat fan"/>
+  <img src="gallery/animations/p9_3d_engagement_modern.gif" width="49%" alt="Cinematic 3-D interception of a maneuvering target"/>
+</p>
+
+**Cooperative and estimation-aware guidance** — an impact-time-controlled salvo arriving together
+(left), a pincer pair covering both branches of an unpredictable break (centre), and mode-adaptive
+guidance whose colour tracks the IMM maneuver belief that arbitrates PN↔APN (right).
+
+<p align="center">
+  <img src="gallery/animations/p24_salvo.gif" width="32%" alt="Impact-time salvo: four interceptors arrive together"/>
+  <img src="gallery/animations/p34_pincer.gif" width="32%" alt="Pincer pair covering both escape branches"/>
+  <img src="gallery/animations/p33_mode_adaptive.gif" width="32%" alt="Mode-adaptive guidance driven by the IMM maneuver belief"/>
+</p>
+
+**Classical vs. learned, 1-v-1** — True PN leading a crossing target while pure pursuit lags (left),
+the game-theoretic anti-line-of-sight evader stretching capture time (centre), and a trained RL
+evader exploiting a fixed pursuer (right).
+
+<p align="center">
+  <img src="gallery/animations/anim_pn_vs_pursuit.gif" width="32%" alt="Proportional Navigation leads where pure pursuit lags"/>
+  <img src="gallery/animations/anim_optimal_evader.gif" width="32%" alt="Game-theoretic anti-LOS evader"/>
+  <img src="gallery/animations/anim_rl_evader.gif" width="32%" alt="Reinforcement-learning evader"/>
+</p>
+
+> Two interactive Plotly 3-D replays (`gallery/animations/*_interactive*.html`) can be opened
+> locally or served from the docs site — they render an orbitable, zoomable version of the 3-D
+> engagements.
+
 ## Architecture
 
 ```

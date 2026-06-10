@@ -17,3 +17,8 @@
 *.zip   binary
 *.pkl   binary
 *.npz   binary
+
+# Interactive Plotly replays are generated exports (plotly.js is embedded inline). Exclude them
+# from GitHub's language statistics and collapse them in diffs so the repo reads as Python.
+gallery/animations/*.html linguist-generated=true
+*.csv                      linguist-generated=true
