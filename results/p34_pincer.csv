@@ -1,0 +1,9 @@
+config,threat,p_any_intercept
+single True PN,clean cruise,0.000
+redundant PN ×2,clean cruise,0.000
+pincer PN ×2,clean cruise,1.000
+redundant APN ×2 (ref),clean cruise,1.000
+single True PN,weaving cruise,0.000
+redundant PN ×2,weaving cruise,0.000
+pincer PN ×2,weaving cruise,0.450
+redundant APN ×2 (ref),weaving cruise,1.000

@@ -1,0 +1,13 @@
+target,interceptor,time
+T1:sea-skimming,I2,6.40
+T4:diving-jink,I8,6.46
+T3:terminal-spiral,I3,6.50
+T2:lofted-ballistic,I9,6.60
+T5:boost-glide,I6,6.84
+T0:cruise-weave,I7,7.96
+T7:sea-skimming,I10,8.48
+T10:diving-jink,I0,8.62
+T9:terminal-spiral,I11,8.78
+T8:lofted-ballistic,I1,9.54
+T11:boost-glide,I4,9.68
+T6:cruise-weave,I5,9.78

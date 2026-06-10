@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# mkdocs build output
+site/
+
+# Testing / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Large / regenerable artifacts. Figures (gallery/) and result tables (results/) are tracked
+# deliberately so the benchmark numbers and visuals are available without a GPU or a full re-run.
+wandb/
+runs/
+checkpoints/
+*.mp4
+
+# Trained RL models (regenerate via the training scripts under experiments/).
+models/
+*.zip
+*.pt
+*.pth
+*.pkl
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Local agent / assistant configuration — not part of the published project.
+CLAUDE.md
+.claude/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

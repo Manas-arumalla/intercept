@@ -1,0 +1,16 @@
+# S2 — Crossing target. Non-zero LOS rate stresses the guidance law's lead behavior.
+name: S2_crossing
+description: Crossing engagement; target flies across the line of sight (heading +y).
+interceptor_speed: 1000.0
+interceptor_a_max: 200.0     # tuned so the crossing geometry separates the laws (partial capture)
+target_speed: 700.0
+range_min: 5000.0
+range_max: 8000.0
+offset_min: -800.0
+offset_max: 800.0
+target_heading_deg: 90.0    # moving +y, across the LOS
+interceptor_aim: lead
+maneuver: null
+kill_radius: 10.0
+dt: 0.005
+t_max: 40.0

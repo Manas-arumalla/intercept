@@ -1,0 +1,5 @@
+evader,True PN,Augmented PN,Sliding-mode
+straight,1.000,1.000,1.000
+weave 18g,1.000,1.000,1.000
+optimal (anti-LOS),0.000,0.080,0.307
+RL evader,0.067,0.707,0.780

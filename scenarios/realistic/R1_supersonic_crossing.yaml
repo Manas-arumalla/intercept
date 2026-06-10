@@ -1,0 +1,21 @@
+# R1 — Supersonic, lightly-maneuvering crossing target (realistic baseline, L2 aero physics).
+# Comparable speeds (interceptor only ~1.5x target, not 3x): no easy speed-win.
+name: R1_supersonic_crossing
+description: Mach ~2.4 crossing target, light (5 g) maneuver; supersonic interceptor (40 g, autopilot lag).
+model: aero
+interceptor_speed: 1200.0     # ~Mach 3.5
+interceptor_a_max: 392.0      # 40 g
+interceptor_tau: 0.2
+target_speed: 800.0           # ~Mach 2.4
+target_a_max: 49.0            # 5 g limit
+target_tau: 0.3
+gravity: 9.80665
+range_min: 6000.0
+range_max: 9000.0
+offset_min: -2500.0
+offset_max: 2500.0
+target_heading_deg: 150.0
+kill_radius: 15.0
+dt: 0.01
+t_max: 25.0
+maneuver: null

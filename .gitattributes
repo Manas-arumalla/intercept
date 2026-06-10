@@ -1,0 +1,19 @@
+# Normalize line endings: text files use LF in the repo, checked out native on Windows.
+* text=auto eol=lf
+
+# Python and config are text.
+*.py    text
+*.md    text
+*.yaml  text
+*.yml   text
+*.toml  text
+*.cfg   text
+*.txt   text
+
+# Binary assets — never normalize.
+*.png   binary
+*.gif   binary
+*.mp4   binary
+*.zip   binary
+*.pkl   binary
+*.npz   binary

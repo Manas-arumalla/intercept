@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use INTERCEPT in your research, please cite it as below."
+title: "INTERCEPT: A reproducible benchmark for classical vs. modern missile-interception guidance"
+abstract: >-
+  INTERCEPT is a simulation-only, research-grade benchmark and platform that compares
+  classical (proportional navigation, optimal/geometric), game-theoretic, optimization-based
+  (MPC), and learned (reinforcement-learning) missile-interception guidance laws on identical,
+  configurable engagement geometries, with shared metrics and Monte-Carlo statistics.
+type: software
+repository-code: "https://github.com/Manas-arumalla/intercept"
+url: "https://Manas-arumalla.github.io/intercept"
+authors:
+  - family-names: "Arumalla"
+    given-names: "Manas Reddy"
+    email: "manasreddyarumalla@gmail.com"
+keywords:
+  - missile guidance
+  - proportional navigation
+  - pursuit-evasion
+  - reinforcement learning
+  - model predictive control
+  - differential games
+  - control systems
+  - robotics
+license: MIT
+version: "0.1.0"
+date-released: "2026-06-07"

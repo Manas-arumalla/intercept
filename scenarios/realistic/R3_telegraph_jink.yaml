@@ -1,0 +1,23 @@
+# R3 — Random-telegraph jink (25 g, unpredictable sign flips). Deceptive, hardest to predict.
+name: R3_telegraph_jink
+description: Mach ~2.2 target performing unpredictable 25 g bang-bang jinks (seeded per trial).
+model: aero
+interceptor_speed: 1200.0
+interceptor_a_max: 392.0      # 40 g
+interceptor_tau: 0.2
+target_speed: 750.0
+target_a_max: 294.0           # 30 g limit
+target_tau: 0.3
+gravity: 9.80665
+range_min: 6000.0
+range_max: 9000.0
+offset_min: -1500.0
+offset_max: 1500.0
+target_heading_deg: 165.0
+kill_radius: 15.0
+dt: 0.01
+t_max: 25.0
+maneuver:
+  type: telegraph
+  g: 25
+  mean_switch: 0.6

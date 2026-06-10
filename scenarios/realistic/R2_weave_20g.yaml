@@ -1,0 +1,23 @@
+# R2 — Sustained 20 g sinusoidal weave (energetic evasive cruise). Induced drag bleeds its speed.
+name: R2_weave_20g
+description: Mach ~2.2 target weaving at 20 g; the classic PN-stressing periodic maneuver.
+model: aero
+interceptor_speed: 1200.0
+interceptor_a_max: 392.0      # 40 g
+interceptor_tau: 0.2
+target_speed: 750.0
+target_a_max: 245.0           # 25 g limit
+target_tau: 0.3
+gravity: 9.80665
+range_min: 6000.0
+range_max: 9000.0
+offset_min: -1500.0
+offset_max: 1500.0
+target_heading_deg: 165.0
+kill_radius: 15.0
+dt: 0.01
+t_max: 25.0
+maneuver:
+  type: weave
+  g: 20
+  frequency: 0.4

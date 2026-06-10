@@ -1,0 +1,28 @@
+# R4 — Closed-loop reactive break: gentle weave at range, then a 30 g last-ditch break away from
+# the interceptor inside 1.5 km — exploiting autopilot lag + g-limit to defeat the terminal lead.
+name: R4_reactive_break
+description: Target cruises with a light weave, then breaks at 30 g when the interceptor closes inside 1.5 km.
+model: aero
+interceptor_speed: 1200.0
+interceptor_a_max: 392.0      # 40 g
+interceptor_tau: 0.2
+target_speed: 700.0
+target_a_max: 294.0           # 30 g limit
+target_tau: 0.3
+gravity: 9.80665
+range_min: 6000.0
+range_max: 9000.0
+offset_min: -1500.0
+offset_max: 1500.0
+target_heading_deg: 165.0
+kill_radius: 15.0
+dt: 0.01
+t_max: 25.0
+maneuver:
+  type: reactive
+  g: 30
+  trigger_range: 1500.0
+  base:
+    type: weave
+    g: 6
+    frequency: 0.25

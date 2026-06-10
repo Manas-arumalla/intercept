@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "intercept"
+version = "0.1.0"
+description = "A research-grade, reproducible benchmark and simulation platform comparing classical, optimal, game-theoretic, and learned missile-interception guidance."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Manas Reddy Arumalla", email = "manasreddyarumalla@gmail.com" }]
+keywords = [
+    "missile-guidance", "proportional-navigation", "pursuit-evasion",
+    "reinforcement-learning", "model-predictive-control", "differential-games",
+    "control-systems", "robotics", "simulation", "benchmark",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+estimation = ["filterpy>=1.4.5"]
+mpc = ["casadi>=3.6"]
+rl = ["gymnasium>=0.29", "stable-baselines3>=2.2", "sb3-contrib>=2.2", "torch>=2.1"]
+marl = ["pettingzoo>=1.24"]
+viz = ["pyvista>=0.43", "plotly>=5.18"]
+track = ["wandb>=0.16", "pyarrow>=14.0"]
+docs = ["mkdocs-material>=9.5", "mkdocs-material[imaging]"]
+dev = ["pytest>=7.4", "pytest-cov>=4.1", "ruff>=0.3", "mypy>=1.8"]
+
+[project.urls]
+Homepage = "https://github.com/Manas-arumalla/intercept"
+Documentation = "https://Manas-arumalla.github.io/intercept"
+Repository = "https://github.com/Manas-arumalla/intercept"
+
+[tool.setuptools.packages.find]
+include = ["intercept*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "NPY"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_ignores = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

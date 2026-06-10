@@ -1,0 +1,25 @@
+law,scenario,N,p_intercept,ci_lo,ci_hi,effort_mean
+True PN,weave_18g,2,1.000,0.975,1.000,87203
+True PN,weave_18g,3,1.000,0.975,1.000,115759
+True PN,weave_18g,4,1.000,0.975,1.000,139233
+True PN,weave_18g,5,1.000,0.975,1.000,157814
+True PN,weave_18g,6,1.000,0.975,1.000,162072
+True PN,weave_18g,7,1.000,0.975,1.000,148399
+True PN,jink_22g,2,0.293,0.226,0.371,242895
+True PN,jink_22g,3,0.633,0.554,0.706,236189
+True PN,jink_22g,4,0.827,0.758,0.879,243384
+True PN,jink_22g,5,0.967,0.924,0.986,253433
+True PN,jink_22g,6,1.000,0.975,1.000,264198
+True PN,jink_22g,7,1.000,0.975,1.000,273424
+Augmented PN,weave_18g,2,1.000,0.975,1.000,121629
+Augmented PN,weave_18g,3,1.000,0.975,1.000,208486
+Augmented PN,weave_18g,4,1.000,0.975,1.000,290558
+Augmented PN,weave_18g,5,1.000,0.975,1.000,346471
+Augmented PN,weave_18g,6,1.000,0.975,1.000,388162
+Augmented PN,weave_18g,7,1.000,0.975,1.000,421861
+Augmented PN,jink_22g,2,0.747,0.672,0.810,219070
+Augmented PN,jink_22g,3,0.960,0.915,0.982,277617
+Augmented PN,jink_22g,4,0.940,0.890,0.968,362963
+Augmented PN,jink_22g,5,0.920,0.865,0.954,423402
+Augmented PN,jink_22g,6,0.900,0.842,0.938,467235
+Augmented PN,jink_22g,7,0.900,0.842,0.938,499113

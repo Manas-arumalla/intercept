@@ -1,0 +1,15 @@
+participant,side,elo
+Sliding-mode,guidance,2213.6
+optimal (anti-LOS),evader,2018.7
+Optimal (OGL),guidance,1917.4
+Augmented PN,guidance,1870.9
+RL recurrent APN-res,guidance,1681.1
+reactive break 25g,evader,1570.8
+RL evader,evader,1536.7
+RL residual-PN,guidance,1530.4
+Pure PN,guidance,1422.7
+True PN,guidance,1309.5
+ZEM PN,guidance,1309.5
+telegraph jink 22g,evader,1180.3
+straight,evader,719.2
+weave 18g,evader,719.2

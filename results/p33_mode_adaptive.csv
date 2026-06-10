@@ -1,0 +1,4 @@
+law,p_intercept,mean_effort
+True PN (est),0.817,103895
+Augmented PN (est),1.000,426413
+Mode-adaptive (IMM),0.917,449229
