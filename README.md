@@ -1,15 +1,15 @@
 # INTERCEPT
 
 <p align="left">
-  <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-blue">
-  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green">
-  <img alt="Tests" src="https://img.shields.io/badge/tests-199%20passing-brightgreen">
-  <img alt="Lint" src="https://img.shields.io/badge/lint-ruff-blueviolet">
-  <img alt="Typed" src="https://img.shields.io/badge/typed-PEP%20561-3776AB">
-  <img alt="Docs" src="https://img.shields.io/badge/docs-mkdocs--material-526CFE">
-  <img alt="RL" src="https://img.shields.io/badge/RL-PPO%20%7C%20RecurrentPPO-orange">
-  <!-- Once the repository is on GitHub, enable the live CI badge:
-  [![CI](https://github.com/Manas-arumalla/intercept/actions/workflows/ci.yml/badge.svg)](https://github.com/Manas-arumalla/intercept/actions/workflows/ci.yml) -->
+ <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-blue">
+ <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green">
+ <img alt="Tests" src="https://img.shields.io/badge/tests-199%20passing-brightgreen">
+ <img alt="Lint" src="https://img.shields.io/badge/lint-ruff-blueviolet">
+ <img alt="Typed" src="https://img.shields.io/badge/typed-PEP%20561-3776AB">
+ <img alt="Docs" src="https://img.shields.io/badge/docs-mkdocs--material-526CFE">
+ <img alt="RL" src="https://img.shields.io/badge/RL-PPO%20%7C%20RecurrentPPO-orange">
+ <!-- Once the repository is on GitHub, enable the live CI badge:
+ [![CI](https://github.com/Manas-arumalla/intercept/actions/workflows/ci.yml/badge.svg)](https://github.com/Manas-arumalla/intercept/actions/workflows/ci.yml) -->
 </p>
 
 **A research-grade, reproducible benchmark that puts classical, optimal, game-theoretic, and
@@ -28,8 +28,8 @@ runs against the same physics, so every difference you see is the algorithm — 
 > as a controls/robotics research and teaching artifact.
 
 <p align="center">
-  <img src="gallery/animations/p28_swarm_showcase.gif" width="49%" alt="Swarm defense: a two-wave raid, 12 interceptors vs 12 diverse-trajectory threats (cruise-weave, sea-skim pop-up, lofted-ballistic, terminal-spiral, diving-jink, boost-glide)"/>
-  <img src="gallery/animations/anim_realistic_jink.gif" width="49%" alt="Realistic engagement vs a jinking evader"/>
+ <img src="gallery/animations/p28_swarm_showcase.gif" width="49%" alt="Swarm defense: a two-wave raid, 12 interceptors vs 12 diverse-trajectory threats (cruise-weave, sea-skim pop-up, lofted-ballistic, terminal-spiral, diving-jink, boost-glide)"/>
+ <img src="gallery/animations/anim_realistic_jink.gif" width="49%" alt="Realistic engagement vs a jinking evader"/>
 </p>
 
 ---
@@ -43,7 +43,7 @@ ladder*. It is, as far as I can find in the literature, the first skill-rating l
 laws.
 
 <p align="center">
-  <img src="gallery/figures/p32_league.png" width="72%" alt="INTERCEPT League: Bradley-Terry/Elo ladder over guidance laws and evaders"/>
+ <img src="gallery/figures/p32_league.png" width="72%" alt="INTERCEPT League: Bradley-Terry/Elo ladder over guidance laws and evaders"/>
 </p>
 
 | rank | participant | side | Elo |
@@ -91,50 +91,50 @@ Across six paradigms, three fidelity levels, 2-D and 3-D, single- and many-vs-ma
 ## Headline results
 
 - **Intelligence beats speed.** On realistic evasive engagements, simple True PN collapses to
-  **P(intercept) 0.21–0.56** (reactive break / unpredictable jink), while **Augmented PN, Optimal,
-  and Sliding-Mode recover to 0.79–1.00** — prediction and robustness, not a speed margin.
+ **P(intercept) 0.21–0.56** (reactive break / unpredictable jink), while **Augmented PN, Optimal,
+ and Sliding-Mode recover to 0.79–1.00** — prediction and robustness, not a speed margin.
 - **Speed parity, no artificial edge.** Both missiles run on the full L3 plant; a ~Mach 3 threat
-  flies a lofted serpentine + intensifying terminal spiral, and the interceptor wins with only a
-  **+37 % closing-speed margin** — a propulsion sweep confirms that shrinking its motor turns the win
-  into a *miss*, so the result is an algorithm win, not a thrust advantage. **60/60 robustness
-  intercept** across randomized geometry and maneuver parameters (P = 1.00, 95 % CI [0.94, 1.00]).
+ flies a lofted serpentine + intensifying terminal spiral, and the interceptor wins with only a
+ **+37 % closing-speed margin** — a propulsion sweep confirms that shrinking its motor turns the win
+ into a *miss*, so the result is an algorithm win, not a thrust advantage. **60/60 robustness
+ intercept** across randomized geometry and maneuver parameters (P = 1.00, 95 % CI [0.94, 1.00]).
 - **Estimation matters.** Against a maneuvering target, an IMM filter holds **~9 m** tracking error
-  where a single-model EKF diverges to **~350 m**.
+ where a single-model EKF diverges to **~350 m**.
 - **Area defense.** 8 interceptors vs an 8-threat fan → **8/8 intercepted, 0 leakers** via Hungarian
-  WTA with re-assignment; scaled up, a two-wave 12-threat raid is fully defeated **12/12**.
+ WTA with re-assignment; scaled up, a two-wave 12-threat raid is fully defeated **12/12**.
 - **Beating a decoy-screen saturation raid.** Against a coordinated raid that screens real threats
-  with decoys, a naive time-minimizing defender wastes its magazine on chaff (**1.7 real leakers**);
-  my **asset-value defense** — impact-point prediction plus a track-history decoy discriminator —
-  spends every interceptor on real threats (**0.0 leakers**), and breaks even with the naive defender
-  when there are no decoys to exploit — discrimination helps exactly where it should.
+ with decoys, a naive time-minimizing defender wastes its magazine on chaff (**1.7 real leakers**);
+ my **asset-value defense** — impact-point prediction plus a track-history decoy discriminator —
+ spends every interceptor on real threats (**0.0 leakers**), and breaks even with the naive defender
+ when there are no decoys to exploit — discrimination helps exactly where it should.
 - **Learned vs classical, at speed parity.** With the interceptor only ~1.45× the target, *from-
-  scratch* PPO collapses — so the policy instead learns a **residual** on a PN baseline, matching the
-  classical laws (head-on / weave **1.00**) and edging them on the crossing shot (**0.82 vs 0.76**)
-  at higher control effort. A clean, reproducible learned-vs-classical comparison with the cost
-  reported alongside the win.
+ scratch* PPO collapses — so the policy instead learns a **residual** on a PN baseline, matching the
+ classical laws (head-on / weave **1.00**) and edging them on the crossing shot (**0.82 vs 0.76**)
+ at higher control effort. A clean, reproducible learned-vs-classical comparison with the cost
+ reported alongside the win.
 - **A learned guidance law that outperforms the PN family.** From-scratch PPO *collapses* on the
-  realistic (lagged + gravity) plant (~0–2 %). The **residual** parameterization — a bounded
-  correction on a PN/APN baseline ([ADR-0011](docs/adr/0011-residual-rl-guidance.md)) — restores it,
-  and with an **APN baseline + a recurrent (LSTM) policy** it reaches **1.00 / 1.00 / 0.95**
-  (crossing / weave / jink). On the unpredictable jink it **beats True PN (0.81) and Augmented PN
-  (0.93)** at lower effort, trailing only sliding-mode (1.00) — a genuine learned win on the hardest
-  realistic case.
+ realistic (lagged + gravity) plant (~0–2 %). The **residual** parameterization — a bounded
+ correction on a PN/APN baseline — restores it,
+ and with an **APN baseline + a recurrent (LSTM) policy** it reaches **1.00 / 1.00 / 0.95**
+ (crossing / weave / jink). On the unpredictable jink it **beats True PN (0.81) and Augmented PN
+ (0.93)** at lower effort, trailing only sliding-mode (1.00) — a genuine learned win on the hardest
+ realistic case.
 - **One fair benchmark, statistically grounded.** The same seeded harness spans **paradigm ×
-  fidelity (L0→L3) × dimension (2-D/3-D)**; pairwise differences use a **paired bootstrap** (the
-  fairness invariant makes trials paired). E.g. on the 2-D L2 jink, Augmented PN beats True PN by
-  **+0.09 (95% CI [+0.03, +0.16], p = 0.009)**; in 3-D a barrel-roll defeats True PN (**0.00**) while
-  Augmented PN holds **1.00**.
+ fidelity (L0→L3) × dimension (2-D/3-D)**; pairwise differences use a **paired bootstrap** (the
+ fairness invariant makes trials paired). E.g. on the 2-D L2 jink, Augmented PN beats True PN by
+ **+0.09 (95% CI [+0.03, +0.16], p = 0.009)**; in 3-D a barrel-roll defeats True PN (**0.00**) while
+ Augmented PN holds **1.00**.
 
 <p align="center">
-  <img src="gallery/figures/p19_capstone_benchmark.png" width="66%" alt="Capstone: P(intercept) across paradigm x fidelity x dimension"/>
+ <img src="gallery/figures/p19_capstone_benchmark.png" width="66%" alt="Capstone: P(intercept) across paradigm x fidelity x dimension"/>
 </p>
 <p align="center">
-  <img src="gallery/figures/p8_realistic_benchmark.png" width="49%" alt="Per-law P(intercept) on realistic evasive scenarios"/>
-  <img src="gallery/figures/p14_advanced_analysis.png" width="49%" alt="Advanced L3 engagement: serpentine, loft, closing range, and achieved-g clipped by the physics turn limit"/>
+ <img src="gallery/figures/p8_realistic_benchmark.png" width="49%" alt="Per-law P(intercept) on realistic evasive scenarios"/>
+ <img src="gallery/figures/p14_advanced_analysis.png" width="49%" alt="Advanced L3 engagement: serpentine, loft, closing range, and achieved-g clipped by the physics turn limit"/>
 </p>
 <p align="center">
-  <img src="gallery/figures/p3_imm_tracking.png" width="49%" alt="IMM vs EKF tracking of a maneuvering target"/>
-  <img src="gallery/figures/p4_law_comparison.png" width="49%" alt="Optimal / PN / sliding-mode / NMPC trade-off"/>
+ <img src="gallery/figures/p3_imm_tracking.png" width="49%" alt="IMM vs EKF tracking of a maneuvering target"/>
+ <img src="gallery/figures/p4_law_comparison.png" width="49%" alt="Optimal / PN / sliding-mode / NMPC trade-off"/>
 </p>
 
 ## Gallery — watch it work
@@ -148,8 +148,8 @@ and a simultaneous time-on-target raid (right). The defender predicts each track
 spends its magazine only on the threats that actually endanger the asset.
 
 <p align="center">
-  <img src="gallery/animations/p35_swarm_penetration.gif" width="49%" alt="Asset-value defense defeating a decoy-screen saturation raid"/>
-  <img src="gallery/animations/p35_tot_raid.gif" width="49%" alt="Simultaneous time-on-target saturation raid being defended"/>
+ <img src="gallery/animations/p35_swarm_penetration.gif" width="49%" alt="Asset-value defense defeating a decoy-screen saturation raid"/>
+ <img src="gallery/animations/p35_tot_raid.gif" width="49%" alt="Simultaneous time-on-target saturation raid being defended"/>
 </p>
 
 **3-D area defense and complex-trajectory evasion** — a 12-threat two-wave raid intercepted 12/12
@@ -157,8 +157,8 @@ spends its magazine only on the threats that actually endanger the asset.
 aero-propulsive plant (right).
 
 <p align="center">
-  <img src="gallery/animations/p7_swarm_defense.gif" width="49%" alt="Hungarian weapon-target assignment defending against a threat fan"/>
-  <img src="gallery/animations/p9_3d_engagement_modern.gif" width="49%" alt="Cinematic 3-D interception of a maneuvering target"/>
+ <img src="gallery/animations/p7_swarm_defense.gif" width="49%" alt="Hungarian weapon-target assignment defending against a threat fan"/>
+ <img src="gallery/animations/p9_3d_engagement_modern.gif" width="49%" alt="Cinematic 3-D interception of a maneuvering target"/>
 </p>
 
 **Cooperative and estimation-aware guidance** — an impact-time-controlled salvo arriving together
@@ -166,9 +166,9 @@ aero-propulsive plant (right).
 guidance whose colour tracks the IMM maneuver belief that arbitrates PN↔APN (right).
 
 <p align="center">
-  <img src="gallery/animations/p24_salvo.gif" width="32%" alt="Impact-time salvo: four interceptors arrive together"/>
-  <img src="gallery/animations/p34_pincer.gif" width="32%" alt="Pincer pair covering both escape branches"/>
-  <img src="gallery/animations/p33_mode_adaptive.gif" width="32%" alt="Mode-adaptive guidance driven by the IMM maneuver belief"/>
+ <img src="gallery/animations/p24_salvo.gif" width="32%" alt="Impact-time salvo: four interceptors arrive together"/>
+ <img src="gallery/animations/p34_pincer.gif" width="32%" alt="Pincer pair covering both escape branches"/>
+ <img src="gallery/animations/p33_mode_adaptive.gif" width="32%" alt="Mode-adaptive guidance driven by the IMM maneuver belief"/>
 </p>
 
 **Classical vs. learned, 1-v-1** — True PN leading a crossing target while pure pursuit lags (left),
@@ -176,9 +176,9 @@ the game-theoretic anti-line-of-sight evader stretching capture time (centre), a
 evader exploiting a fixed pursuer (right).
 
 <p align="center">
-  <img src="gallery/animations/anim_pn_vs_pursuit.gif" width="32%" alt="Proportional Navigation leads where pure pursuit lags"/>
-  <img src="gallery/animations/anim_optimal_evader.gif" width="32%" alt="Game-theoretic anti-LOS evader"/>
-  <img src="gallery/animations/anim_rl_evader.gif" width="32%" alt="Reinforcement-learning evader"/>
+ <img src="gallery/animations/anim_pn_vs_pursuit.gif" width="32%" alt="Proportional Navigation leads where pure pursuit lags"/>
+ <img src="gallery/animations/anim_optimal_evader.gif" width="32%" alt="Game-theoretic anti-LOS evader"/>
+ <img src="gallery/animations/anim_rl_evader.gif" width="32%" alt="Reinforcement-learning evader"/>
 </p>
 
 > Two interactive Plotly 3-D replays (`gallery/animations/*_interactive*.html`) can be opened
@@ -189,29 +189,29 @@ evader exploiting a fixed pursuer (right).
 
 ```
 Scenario (YAML) → Simulation Core (dynamics · RK4 · engagement loop)
-   ├── Sensors      → Estimation/Tracking (EKF/UKF/IMM) ┐
-   ├── Guidance/Control (PN·APN·OGL·SMG·MPC·RL·Game)    ├→ Engagement → Result/metrics
-   └── Adversary (scripted · game-theoretic · RL)        ┘
+ ├── Sensors → Estimation/Tracking (EKF/UKF/IMM) ┐
+ ├── Guidance/Control (PN·APN·OGL·SMG·MPC·RL·Game) ├→ Engagement → Result/metrics
+ └── Adversary (scripted · game-theoretic · RL) ┘
 Experiment & Analysis: Monte-Carlo · benchmark harness · capture-region · viz · RL training
 ```
 
 An algorithm-agnostic core, plug-in paradigms, and an experiment/analysis layer. The
 dimension-agnostic engagement loop runs L0–L3 and 2-D/3-D unchanged. See
-[docs/index.md](docs/index.md) and the [Architecture Decision Records](docs/adr/) for the rationale
+[docs/index.md](docs/index.md) and the Architecture Decision Records for the rationale
 behind each design choice.
 
 ## Quickstart
 
 ```bash
-pip install -e ".[dev]"                       # core + dev tools (extras: .[rl] .[mpc] .[estimation])
-pytest -q                                     # 199 tests
-ruff check intercept tests experiments        # lint
+pip install -e ".[dev]" # core + dev tools (extras:.[rl].[mpc].[estimation])
+pytest -q # 199 tests
+ruff check intercept tests experiments # lint
 
-python experiments/p2_benchmark.py            # the centerpiece: PN-family Monte-Carlo + figures
-python experiments/p8_realistic_benchmark.py  # intelligence-beats-speed on realistic evaders
-python experiments/p14_advanced_evasion.py    # L3 complex-trajectory showcase + robustness (speed parity)
-python experiments/p35_swarm_penetration.py   # coordinated saturation tactics vs the asset-value defense
-python experiments/p9_3d_demo.py              # 3-D engagement + modern animation + interactive HTML
+python experiments/p2_benchmark.py # the centerpiece: PN-family Monte-Carlo + figures
+python experiments/p8_realistic_benchmark.py # intelligence-beats-speed on realistic evaders
+python experiments/p14_advanced_evasion.py # L3 complex-trajectory showcase + robustness (speed parity)
+python experiments/p35_swarm_penetration.py # coordinated saturation tactics vs the asset-value defense
+python experiments/p9_3d_demo.py # 3-D engagement + modern animation + interactive HTML
 ```
 
 Headless plotting (CI/automation): set `MPLBACKEND=Agg`. Experiments write figures to `gallery/`
@@ -220,14 +220,14 @@ and CSVs to `results/`.
 ## Repository layout
 
 ```
-intercept/   core · guidance · sensors · estimation · multiagent · adversary · envs · benchmark · viz
+intercept/ core · guidance · sensors · estimation · multiagent · adversary · envs · benchmark · viz
 experiments/ runnable scripts (p0…p35) producing every figure/animation in gallery/
-tests/       unit · property · regression (199)
-scenarios/   YAML scenario suite (2-D and 3-D)
-results/     benchmark CSVs + the League ladder (committed, so the numbers travel with the repo)
-gallery/     publication-quality figures + cinematic animations
-docs/        index · adr/ (28 decisions) · algorithms/ · benchmarks/ · development log
-planning/    research foundation (state of the art) + design document / roadmap
+tests/ unit · property · regression (199)
+scenarios/ YAML scenario suite (2-D and 3-D)
+results/ benchmark CSVs + the League ladder (committed, so the numbers travel with the repo)
+gallery/ publication-quality figures + cinematic animations
+docs/ index · algorithms/ (governing equations + references) · benchmarks/ (methodology)
+planning/ research foundation (state of the art) + design document / roadmap
 ```
 
 ## Documentation
@@ -238,12 +238,10 @@ A full **mkdocs-material** site (`mkdocs.yml`) collects the docs below; build it
 ruff and pytest on Python 3.10–3.12, type-checks with mypy (advisory), and verifies the docs build.
 
 - **Results digest (headline findings + figures):** [docs/results.md](docs/results.md)
-- **Scope & limitations (the model's boundaries, stated plainly):** [docs/limitations.md](docs/limitations.md)
 - **Research foundation & roadmap:** [planning/00_RESEARCH_REPORT.md](planning/00_RESEARCH_REPORT.md),
-  [planning/01_PROJECT_PLAN.md](planning/01_PROJECT_PLAN.md)
+ [planning/01_PROJECT_PLAN.md](planning/01_PROJECT_PLAN.md)
 - **Algorithm notes (with governing equations + references):** [docs/algorithms/](docs/algorithms/)
 - **Benchmark methodology:** [docs/benchmarks/methodology.md](docs/benchmarks/methodology.md)
-- **Decisions:** [docs/adr/](docs/adr/) · **Development log:** [docs/progress/PROGRESS.md](docs/progress/PROGRESS.md)
 
 ## Tech stack
 

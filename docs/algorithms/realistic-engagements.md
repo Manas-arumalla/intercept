@@ -1,8 +1,8 @@
 # Realistic engagements (L2 fidelity): physics, evasion, and why guidance must be smart
 
-Modules: [`intercept/core/aero.py`](../../intercept/core/aero.py),
-[`intercept/adversary/evasive.py`](../../intercept/adversary/evasive.py),
-[`scenarios/realistic/`](../../scenarios/realistic/). Decision: [ADR-0006](../adr/0006-realistic-fidelity-l2.md).
+Modules: [`intercept/core/aero.py`](./../intercept/core/aero.py),
+[`intercept/adversary/evasive.py`](./../intercept/adversary/evasive.py),
+[`scenarios/realistic/`](./../scenarios/realistic/). Decision:.
 
 ## Why
 
@@ -31,10 +31,10 @@ Only the lateral (⟂-velocity) component of a guidance command is achievable as
 
 - `hard_turn` — sustained max-g break (spiral).
 - `random_telegraph(accel, mean_switch, rng)` — bang-bang jink with **random** sign flips (seeded,
-  reproducible). Deliberately unpredictable.
+ reproducible). Deliberately unpredictable.
 - `reactive_break(pursuer, accel, trigger_range, base)` — **closed-loop**: cruises a baseline
-  maneuver, then breaks max-g *away* from the interceptor once it closes inside the trigger range —
-  a last-ditch defensive break exploiting the interceptor's lag and g-limit.
+ maneuver, then breaks max-g *away* from the interceptor once it closes inside the trigger range —
+ a last-ditch defensive break exploiting the interceptor's lag and g-limit.
 
 ## Realistic suite (`scenarios/realistic/`)
 
@@ -74,7 +74,7 @@ near-max-g helix as the interceptor closes, the way maneuvering-reentry vehicles
 anti-ship missiles defeat endgame interception). `combine` sums these into one commanded vector; the
 plant clips it to the physics turn limit, so every g costs energy.
 
-**Realistic speed parity (no speed cheat — [ADR-0010](../adr/0010-realistic-speed-parity-no-cheat.md)).**
+**Realistic speed parity (no speed cheat —).**
 Speeds are deliberately *comparable*: the interceptor launches ~Mach 1.2, boosts to ~Mach 3, then
 coasts to **~Mach 2.6 at the merge**; the threat is a fast **~Mach 3** missile that bleeds to
 **~Mach 2** under hard maneuvering — only a **~37 %** closing edge (a real SAM-vs-supersonic figure).
@@ -99,6 +99,6 @@ geometry + every maneuver parameter): **P(intercept) = 1.00** (95 % CI [0.94, 1.
 
 - Parameters are representative (Zarchan-grounded), not vehicle-specific; tunable per scenario.
 - L0-trained RL degrades on L2/L3 (different plant); retraining on the realistic plant is the open
-  follow-up (RecurrentPPO / imitation warm-start from PN — see the RL docs and progress log).
+ follow-up (RecurrentPPO / imitation warm-start from PN — see the RL notes).
 - Speed-parity tuning is geometry-specific (the robustness sweep bounds, but does not eliminate, the
-  dependence); a much longer/shorter engagement window would need re-tuning to stay near minimum energy.
+ dependence); a much longer/shorter engagement window would need re-tuning to stay near minimum energy.

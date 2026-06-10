@@ -40,6 +40,12 @@ models/
 CLAUDE.md
 .claude/
 
+# Internal process docs — kept locally, not published.
+CHANGELOG.md
+docs/limitations.md
+docs/progress/
+docs/adr/
+
 # OS / editor
 .DS_Store
 Thumbs.db

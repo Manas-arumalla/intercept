@@ -1,16 +1,16 @@
 # Optimal, sliding-mode & MPC guidance
 
-Modules: [`intercept/guidance/ogl.py`](../../intercept/guidance/ogl.py),
-[`smg.py`](../../intercept/guidance/smg.py), [`mpc.py`](../../intercept/guidance/mpc.py).
+Modules: [`intercept/guidance/ogl.py`](./../intercept/guidance/ogl.py),
+[`smg.py`](./../intercept/guidance/smg.py), [`mpc.py`](./../intercept/guidance/mpc.py).
 All conform to the `Controller` contract and run against identical dynamics.
 
-## Optimal Guidance Law (OGL / LQ)  — `OptimalGuidance`
+## Optimal Guidance Law (OGL / LQ) — `OptimalGuidance`
 
 Minimizing control energy ∫a² dt for the linearized intercept (zero terminal miss) gives the
 closed-form feedback law
 
 ```
-a = N' · ZEM⊥ / t_go²,     N' = 3        (+ (N'/2)·a_T⊥ if augmented)
+a = N' · ZEM⊥ / t_go², N' = 3 (+ (N'/2)·a_T⊥ if augmented)
 ```
 
 with zero-effort miss `ZEM = r + v·t_go`. It is the optimal-control sibling of ZEM-PN (`N=3`); the
@@ -18,13 +18,13 @@ implementation lets `N'` be tuned and adds the optimal target-acceleration feedf
 `OptimalGuidance(N'=3)` reproduces `zem_pn(N=3)` to machine precision; the augmented form reduces
 terminal miss against a maneuvering target. Reference: Bryson & Ho; Zarchan.
 
-## Sliding-Mode Guidance (SMG)  — `SlidingModeGuidance`
+## Sliding-Mode Guidance (SMG) — `SlidingModeGuidance`
 
 Takes the LOS rate as the sliding variable `s = λ̇`; driving `s → 0` enforces parallel navigation
 robustly against an *unknown* maneuvering target:
 
 ```
-a = (N · Vc · λ̇  +  η · tanh(λ̇ / Φ)) ⟂ LOS
+a = (N · Vc · λ̇ + η · tanh(λ̇ / Φ)) ⟂ LOS
 ```
 
 The first term is the equivalent (PN-like) control; the second is the robust switching term, with a
@@ -32,13 +32,13 @@ The first term is the equivalent (PN-like) control; the second is the robust swi
 bound guarantees reaching the surface. **Validated:** zero command on a collision course; intercepts
 crossing and weaving targets; robust to maneuvers. Reference: Shtessel et al., *Sliding Mode Control*.
 
-## Nonlinear MPC  — `MPCGuidance` (requires CasADi)
+## Nonlinear MPC — `MPCGuidance` (requires CasADi)
 
 Each replan solves a finite-horizon OCP (CasADi + IPOPT):
 
 ```
-min  w_terminal·‖p_M(T) − p̂_T(T)‖²  +  w_effort·Σ‖a‖²   (+ impact-angle term)
-s.t. point-mass dynamics,   ‖a_k‖ ≤ a_max,   horizon T = min(horizon, t_go)
+min w_terminal·‖p_M(T) − p̂_T(T)‖² + w_effort·Σ‖a‖² (+ impact-angle term)
+s.t. point-mass dynamics, ‖a_k‖ ≤ a_max, horizon T = min(horizon, t_go)
 ```
 
 and applies the first command (receding horizon). The solver runs every `replan_every` steps
@@ -84,7 +84,7 @@ costlier than the closed-form laws). Only RL guidance now remains 2-D.
 ## Notes / limitations
 
 - MPC uses Euler discretization and assumes constant-velocity target prediction over the horizon;
-  IPOPT solves are ms-scale but far costlier than the closed-form laws (hence not in the full
-  Monte-Carlo benchmark by default).
+ IPOPT solves are ms-scale but far costlier than the closed-form laws (hence not in the full
+ Monte-Carlo benchmark by default).
 - `acados` (compiled SQP/RTI) is a future drop-in for faster real-time MPC; CasADi + IPOPT is the
-  pip-installable baseline here.
+ pip-installable baseline here.

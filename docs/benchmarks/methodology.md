@@ -1,29 +1,29 @@
 # Benchmark methodology
 
 How INTERCEPT compares guidance laws rigorously and reproducibly. Module:
-[`intercept/benchmark/`](../../intercept/benchmark/).
+[`intercept/benchmark/`](./../intercept/benchmark/).
 
 ## Overview
 
 For each **(algorithm × scenario)** cell the harness runs a seeded Monte-Carlo of randomized
 engagements and aggregates standardized metrics. All algorithms see *identical* sampled engagements
 per seed (the
-[fairness invariant](../adr/0003-benchmark-fairness-invariants.md)), so outcome differences are
+fairness invariant), so outcome differences are
 attributable to the guidance law alone.
 
 ```
-scenario suite (YAML)  ─┐
-guidance factories     ─┤→ run_benchmark ─→ [BenchmarkRow(algorithm, scenario, MetricSummary)]
-n_trials, seed         ─┘        │
-                                 ├─ format_table / write_csv   → results table + CSV
-                                 ├─ plot_pintercept_bars        → P(intercept) bar chart
-                                 └─ compute_capture_region/plot → capture-region heatmap
+scenario suite (YAML) ─┐
+guidance factories ─┤→ run_benchmark ─→ [BenchmarkRow(algorithm, scenario, MetricSummary)]
+n_trials, seed ─┘ │
+ ├─ format_table / write_csv → results table + CSV
+ ├─ plot_pintercept_bars → P(intercept) bar chart
+ └─ compute_capture_region/plot → capture-region heatmap
 ```
 
 ## Scenarios
 
-A [`ParametricScenario`](../../intercept/benchmark/scenario.py) is a *distribution* over engagement
-geometries plus a target maneuver, (de)serialized to YAML in [`scenarios/`](../../scenarios/):
+A [`ParametricScenario`](./../intercept/benchmark/scenario.py) is a *distribution* over engagement
+geometries plus a target maneuver, (de)serialized to YAML in [`scenarios/`](./../scenarios/):
 
 | Field | Meaning |
 |---|---|
@@ -49,7 +49,7 @@ target deterministically (capture-region sweeps).
 
 ## Metrics
 
-[`MetricSummary`](../../intercept/benchmark/metrics.py) per cell:
+[`MetricSummary`](./../intercept/benchmark/metrics.py) per cell:
 
 - **P(intercept)** with a **Wilson score 95% CI** (robust for small samples / extreme rates).
 - **Miss distance** — mean, median, 95th percentile (over all trials; closest approach).
@@ -64,7 +64,7 @@ under `results/` plus the seed reproduces every figure. Validated in `tests/test
 
 ## Capture-region analysis
 
-[`compute_capture_region`](../../intercept/benchmark/capture_region.py) sweeps the target's start
+[`compute_capture_region`](./../intercept/benchmark/capture_region.py) sweeps the target's start
 position over a grid and records intercept/miss at each cell; the intercepting set is the law's
 **capture region** for that engagement (larger = more robust). Rendered as a miss-distance heatmap
 with the capture boundary outlined.
@@ -100,11 +100,11 @@ paradigm × fidelity × dimension grid in one figure.
 ## Limitations (current)
 
 - Target maneuvers are open-loop or closed-loop scripted/game-theoretic; adversarial-RL evaders are
-  future work.
+ future work.
 - Classical gains were chosen "best-effort" (N=4); `experiments/p21_gain_sensitivity.py` now sweeps
-  N ∈ {2..7} and shows N=4 sits on the robust capture/effort plateau (True PN's jink capture rises
-  with N; Augmented PN peaks near N≈3 then declines as effort climbs). Figure
-  `gallery/figures/p21_gain_sensitivity.png`.
+ N ∈ {2..7} and shows N=4 sits on the robust capture/effort plateau (True PN's jink capture rises
+ with N; Augmented PN peaks near N≈3 then declines as effort climbs). Figure
+ `gallery/figures/p21_gain_sensitivity.png`.
 - The 3-D Monte-Carlo benchmark compares True/Augmented PN, Optimal (OGL-3D), and Sliding-mode
-  (SMG-3D); 3-D MPC and RL are demonstrated and tested separately but kept out of the heavy sweeps
-  for solve/rollout cost.
+ (SMG-3D); 3-D MPC and RL are demonstrated and tested separately but kept out of the heavy sweeps
+ for solve/rollout cost.

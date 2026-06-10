@@ -1,7 +1,7 @@
 # Proportional Navigation (PN) and Augmented PN (APN)
 
-Module: [`intercept/guidance/pn.py`](../../intercept/guidance/pn.py),
-[`intercept/guidance/apn.py`](../../intercept/guidance/apn.py).
+Module: [`intercept/guidance/pn.py`](./../intercept/guidance/pn.py),
+[`intercept/guidance/apn.py`](./../intercept/guidance/apn.py).
 The classical guidance baseline.
 
 ## Idea
@@ -25,14 +25,14 @@ Variants (selected by `variant=`):
 |---|---|---|
 | `"true"` | `a = N · Vc · λ̇` | the **LOS** |
 | `"pure"` | `a = N · Vc · λ̇` | the interceptor **velocity** |
-| `"zem"`  | `a = N · ZEM⊥ / t_go²` | (ZEM⊥ already ⟂ LOS) |
+| `"zem"` | `a = N · ZEM⊥ / t_go²` | (ZEM⊥ already ⟂ LOS) |
 
 `N` is the navigation constant (typically 3–5; default 4).
 
 **Augmented PN** adds a target-acceleration feedforward to True PN:
 
 ```
-a = N · Vc · λ̇  +  (N / 2) · a_T⊥
+a = N · Vc · λ̇ + (N / 2) · a_T⊥
 ```
 
 where `a_T⊥` is the target acceleration perpendicular to the LOS. Because target acceleration is
@@ -47,7 +47,7 @@ from intercept.guidance import true_pn, zem_pn, AugmentedPN
 from intercept.core import Entity, PointMass2D
 
 interceptor = Entity("interceptor", PointMass2D(a_max=100.0),
-                     state=[0, 0, 600, 0], controller=true_pn("target", N=4.0))
+ state=[0, 0, 600, 0], controller=true_pn("target", N=4.0))
 ```
 
 Any guidance law conforms to the `Controller` contract `(t, own_state, world) -> control`, so it
@@ -57,15 +57,15 @@ drops straight into an `Entity` and runs against identical dynamics as every oth
 
 - **Zero LOS-rate ⇒ zero command:** on a collision course PN coasts straight (`test_zero_los_rate_*`).
 - **Constant-bearing intercept of a crossing target at low authority:** with `a_max = 100 m/s²`,
-  True PN intercepts (miss ≈ 8 m) where pure pursuit lags into a ~103 m miss.
-  Figure: `gallery/figures/p1_pn_vs_pursuit.png`.
+ True PN intercepts (miss ≈ 8 m) where pure pursuit lags into a ~103 m miss.
+ Figure: `gallery/figures/p1_pn_vs_pursuit.png`.
 - **APN < PN terminal miss vs. a maneuvering target:** against a 90 m/s² sustained turn, APN's
-  feedforward reduces terminal miss (≈ 0.94 m → 0.75 m). Figure: `gallery/figures/p1_pn_vs_apn_maneuvering.png`.
+ feedforward reduces terminal miss (≈ 0.94 m → 0.75 m). Figure: `gallery/figures/p1_pn_vs_apn_maneuvering.png`.
 
 ## Limitations / notes
 
 - Point-mass, perfect-information. LOS-rate sensitivity to noise and the effect of an
-  estimator between sensor and guidance are studied from P3.
+ estimator between sensor and guidance are studied from P3.
 - `Vc → 0` (pure crossing, no closing) degenerates the magnitude form; ZEM form guards `Vc ≤ 0`.
 - Pure PN can differ from True PN when the interceptor velocity is far from the LOS direction.
 

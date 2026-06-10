@@ -33,43 +33,43 @@ Build a **reproducible, open-source simulation platform and benchmark** that rig
 **Design principles:** plug-in interfaces (swap dynamics/guidance/estimator/sensor independently), config-driven scenarios (YAML), deterministic+seeded, separation of *simulation core* from *algorithms* from *experiment/analysis*.
 
 ```
-                 ┌──────────────────────────────────────────────────┐
-                 │                  Scenario (YAML)                  │
-                 │  geometry · entities · sensors · noise · seeds    │
-                 └───────────────────────┬──────────────────────────┘
-                                         │
-              ┌──────────────────────────▼───────────────────────────┐
-              │                  Simulation Core                      │
-              │  ┌────────────┐  ┌──────────────┐  ┌───────────────┐  │
-              │  │  Dynamics  │  │  Integrator  │  │ Engagement /  │  │
-              │  │ (2D/3D PM, │  │  (RK4/RK45)  │  │ event manager │  │
-              │  │  autopilot │  │              │  │ (intercept,   │  │
-              │  │   lag,6DOF*)│  └──────────────┘  │  miss, ground)│  │
-              │  └────────────┘                     └───────────────┘  │
-              └───────┬───────────────┬───────────────┬───────────────┘
-                      │ true state    │ measurements  │ commands
-        ┌─────────────▼──┐   ┌────────▼─────────┐   ┌─▼────────────────┐
-        │   Sensors      │   │  Estimation /    │   │   Guidance /     │
-        │ radar/IR/EO    │──▶│  Tracking        │──▶│   Control        │
-        │ noise, clutter │   │ EKF/UKF/IMM/PF,  │   │ PN·APN·OGL·SMG·  │
-        │                │   │ fusion(CI), pred │   │ MPC·RL·Game·     │
-        └────────────────┘   └──────────────────┘   │ cooperative/WTA  │
-                                                     └──────────────────┘
-                      ▲                                       │
-                      │            Adversary (evader)         │
-                      └──── scripted / game-theoretic / RL ◀──┘
+ ┌──────────────────────────────────────────────────┐
+ │ Scenario (YAML) │
+ │ geometry · entities · sensors · noise · seeds │
+ └───────────────────────┬──────────────────────────┘
+ │
+ ┌──────────────────────────▼───────────────────────────┐
+ │ Simulation Core │
+ │ ┌────────────┐ ┌──────────────┐ ┌───────────────┐ │
+ │ │ Dynamics │ │ Integrator │ │ Engagement / │ │
+ │ │ (2D/3D PM, │ │ (RK4/RK45) │ │ event manager │ │
+ │ │ autopilot │ │ │ │ (intercept, │ │
+ │ │ lag,6DOF*)│ └──────────────┘ │ miss, ground)│ │
+ │ └────────────┘ └───────────────┘ │
+ └───────┬───────────────┬───────────────┬───────────────┘
+ │ true state │ measurements │ commands
+ ┌─────────────▼──┐ ┌────────▼─────────┐ ┌─▼────────────────┐
+ │ Sensors │ │ Estimation / │ │ Guidance / │
+ │ radar/IR/EO │──▶│ Tracking │──▶│ Control │
+ │ noise, clutter │ │ EKF/UKF/IMM/PF, │ │ PN·APN·OGL·SMG· │
+ │ │ │ fusion(CI), pred │ │ MPC·RL·Game· │
+ └────────────────┘ └──────────────────┘ │ cooperative/WTA │
+ └──────────────────┘
+ ▲ │
+ │ Adversary (evader) │
+ └──── scripted / game-theoretic / RL ◀──┘
 
-   ┌──────────────────────────────────────────────────────────────────┐
-   │  Experiment & Analysis layer (outside core)                       │
-   │  Monte-Carlo runner · benchmark harness · metrics · capture-region │
-   │  sweeps · plotting · report generation · RL training (Gym env)     │
-   └──────────────────────────────────────────────────────────────────┘
+ ┌──────────────────────────────────────────────────────────────────┐
+ │ Experiment & Analysis layer (outside core) │
+ │ Monte-Carlo runner · benchmark harness · metrics · capture-region │
+ │ sweeps · plotting · report generation · RL training (Gym env) │
+ └──────────────────────────────────────────────────────────────────┘
 ```
 
 **Key interfaces (abstract base classes):**
 - `Dynamics`: `step(state, control, dt) -> state`; implementations: `PointMass2D`, `PointMass3D`, `PointMass3DWithLag`, (`SixDOF` optional).
 - `Sensor`: `measure(true_state, rng) -> Measurement` (radar: range/range-rate/angles; IR/EO: angles-only; noise+clutter).
-- `Estimator`: `predict()`, `update(measurement)` → `(x̂, P)`; implementations: EKF, UKF, IMM, PF.
+- `Estimator`: `predict`, `update(measurement)` → `(x̂, P)`; implementations: EKF, UKF, IMM, PF.
 - `Guidance`: `command(estimate, own_state) -> acceleration`; implementations per paradigm.
 - `Adversary`: `maneuver(state) -> acceleration`; scripted/game/RL.
 - `Allocator` (multi-agent): `assign(interceptors, threats) -> assignment`.
@@ -82,10 +82,10 @@ Build a **reproducible, open-source simulation platform and benchmark** that rig
 
 - **Frames & state:** inertial Cartesian; relative LOS computed for guidance. 2D first (x, y, v, γ), then 3D (position, velocity, optional Euler/quaternion for 6-DOF).
 - **Fidelity ladder (progressive):**
-  1. **L0 — 2D point-mass, ideal:** instantaneous acceleration command, no lag/noise. (Algorithm development & first comparisons.)
-  2. **L1 — 2D + autopilot lag + acceleration saturation + sensor noise.** (Realism that breaks idealized results — Research §E.5.)
-  3. **L2 — 3D point-mass/kinematic** (same ladder of imperfections).
-  4. **L3 (optional) — 3D with simplified aero / autopilot loops**; **6-DOF via JSBSim** as a stretch goal / MATLAB-Simulink cross-check.
+ 1. **L0 — 2D point-mass, ideal:** instantaneous acceleration command, no lag/noise. (Algorithm development & first comparisons.)
+ 2. **L1 — 2D + autopilot lag + acceleration saturation + sensor noise.** (Realism that breaks idealized results — Research §E.5.)
+ 3. **L2 — 3D point-mass/kinematic** (same ladder of imperfections).
+ 4. **L3 (optional) — 3D with simplified aero / autopilot loops**; **6-DOF via JSBSim** as a stretch goal / MATLAB-Simulink cross-check.
 - **Time stepping:** fixed-step RK4 (deterministic, seeded); RK45 option for accuracy studies. Guidance/estimator update rates configurable (decouple control rate from integration rate).
 - **Engagement manager:** detects intercept (miss < kill radius), miss (range increasing past closest approach), ground/boundary, timeout; logs the full trajectory.
 - **Determinism:** every run takes an explicit seed; configs hashed and stored with results.
@@ -116,7 +116,7 @@ Tiered by the roadmap (see §10). ✅ = pillar, ◇ = secondary, ★ = stretch/n
 **The centerpiece.** A declarative benchmark harness that runs every registered algorithm against a shared **scenario suite** and emits a standardized results table + figures.
 
 - **Scenario suite (versioned, in `scenarios/`):**
-  - `S1_headon_nonmaneuvering` · `S2_crossing` · `S3_tail_chase` · `S4_weaving_target(3g/6g/9g)` · `S5_high_offset` · `S6_noisy_seeker` · `S7_salvo_multi_interceptor` · `S8_swarm_area_defense` · `S9_adversarial_evader`.
+ - `S1_headon_nonmaneuvering` · `S2_crossing` · `S3_tail_chase` · `S4_weaving_target(3g/6g/9g)` · `S5_high_offset` · `S6_noisy_seeker` · `S7_salvo_multi_interceptor` · `S8_swarm_area_defense` · `S9_adversarial_evader`.
 - **Harness:** `benchmark run --algos all --scenarios all --trials 1000 --seed 0` → for each (algorithm × scenario): Monte-Carlo over randomized initial conditions, collect metrics, write `results/<timestamp>/...` (Parquet/CSV + config hash + figures).
 - **Fairness guarantees (correctness-critical):** all paradigms share the *same* dynamics, sensor noise, and scenario RNG stream; RL agents evaluated on *held-out* seeds/scenarios; classical laws given best-effort gain tuning (documented).
 - **Capture-region module:** grid-sweep initial range × aspect angle (× target-g), render success/failure boundary per algorithm.
@@ -154,17 +154,17 @@ The "visually impressive" requirement is a first-class goal, not an afterthought
 (Per the continuous-documentation requirement — this is a deliverable, not overhead.)
 ```
 docs/
-  index.md                  # landing / quickstart
-  research/                 # this research report + literature notes, BibTeX
-  theory/                   # derivations: PN, APN, OGL, SMG, MPC, game theory, RL formulation
-  architecture/             # system design, interfaces, data flow
-  adr/                      # Architecture Decision Records (0001-*.md, one per decision)
-  algorithms/               # per-algorithm docs: math, params, usage, references
-  benchmarks/               # methodology, scenario definitions, how to reproduce
-  results/                  # generated benchmark report(s), figures, tables
-  experiments/              # experiment log (date, hypothesis, config, outcome)
-  progress/                 # PROGRESS.md / devlog, milestone checkpoints
-  tutorials/                # "add a new guidance law", "train an RL agent"
+ index.md # landing / quickstart
+ research/ # this research report + literature notes, BibTeX
+ theory/ # derivations: PN, APN, OGL, SMG, MPC, game theory, RL formulation
+ architecture/ # system design, interfaces, data flow
+ adr/ # Architecture Decision Records (0001-*.md, one per decision)
+ algorithms/ # per-algorithm docs: math, params, usage, references
+ benchmarks/ # methodology, scenario definitions, how to reproduce
+ results/ # generated benchmark report(s), figures, tables
+ experiments/ # experiment log (date, hypothesis, config, outcome)
+ progress/ # PROGRESS.md / devlog, milestone checkpoints
+ tutorials/ # "add a new guidance law", "train an RL agent"
 ```
 - **MkDocs (Material)** for a polished docs site (GitHub Pages). Math via KaTeX.
 - **ADRs**: numbered, immutable, one decision each (e.g., "0001 — Python primary stack", "0002 — point-mass first").
@@ -177,30 +177,30 @@ docs/
 
 ```
 intercept/
-├── README.md                 # thesis, hero GIF, quickstart, results teaser, ethics note
-├── LICENSE                   # MIT or Apache-2.0
-├── CITATION.cff              # make it citable
-├── pyproject.toml            # pip-installable, pinned deps, ruff/black/mypy config
+├── README.md # thesis, hero GIF, quickstart, results teaser, ethics note
+├── LICENSE # MIT or Apache-2.0
+├── CITATION.cff # make it citable
+├── pyproject.toml # pip-installable, pinned deps, ruff/black/mypy config
 ├── CHANGELOG.md
-├── .github/workflows/ci.yml  # lint + type + tests + (smoke) benchmark
-├── intercept/                # the package
-│   ├── core/                 # dynamics, integrators, engagement manager, frames
-│   ├── sensors/              # radar, ir_eo, noise, clutter
-│   ├── estimation/           # ekf, ukf, imm, pf, fusion, predictors
-│   ├── guidance/             # pn, apn, ogl, smg, mpc, rl_policy, game, base
-│   ├── multiagent/           # wta, cooperative, swarm
-│   ├── adversary/            # scripted, game_theoretic, rl_evader
-│   ├── envs/                 # gymnasium + pettingzoo wrappers (the RL bridge)
-│   ├── benchmark/            # harness, scenario loader, metrics, montecarlo
-│   └── viz/                  # plotting, animation, dashboard
-├── scenarios/                # YAML scenario suite (versioned)
-├── configs/                  # algorithm + experiment configs
-├── experiments/              # runnable scripts producing paper figures
-├── notebooks/                # exploratory + tutorial notebooks
-├── tests/                    # unit + property + regression (golden trajectories)
-├── results/                  # generated (gitignored except curated headline figures)
-├── docs/                     # (see §8)
-└── matlab/                   # optional 6-DOF / Simulink cross-check
+├──.github/workflows/ci.yml # lint + type + tests + (smoke) benchmark
+├── intercept/ # the package
+│ ├── core/ # dynamics, integrators, engagement manager, frames
+│ ├── sensors/ # radar, ir_eo, noise, clutter
+│ ├── estimation/ # ekf, ukf, imm, pf, fusion, predictors
+│ ├── guidance/ # pn, apn, ogl, smg, mpc, rl_policy, game, base
+│ ├── multiagent/ # wta, cooperative, swarm
+│ ├── adversary/ # scripted, game_theoretic, rl_evader
+│ ├── envs/ # gymnasium + pettingzoo wrappers (the RL bridge)
+│ ├── benchmark/ # harness, scenario loader, metrics, montecarlo
+│ └── viz/ # plotting, animation, dashboard
+├── scenarios/ # YAML scenario suite (versioned)
+├── configs/ # algorithm + experiment configs
+├── experiments/ # runnable scripts producing paper figures
+├── notebooks/ # exploratory + tutorial notebooks
+├── tests/ # unit + property + regression (golden trajectories)
+├── results/ # generated (gitignored except curated headline figures)
+├── docs/ # (see §8)
+└── matlab/ # optional 6-DOF / Simulink cross-check
 ```
 
 ---
@@ -266,10 +266,10 @@ Each phase ends with a **git tag**, updated **PROGRESS.md**, tests green, and a 
 
 - **Name:** INTERCEPT. **License:** MIT.
 - **RL framework:** Stable-Baselines3 for reliable baselines (PPO/RecurrentPPO), with the readable
-  showcase agents kept single-file.
+ showcase agents kept single-file.
 - **Experiment tracking:** in-repo CSV result tables for the benchmark (committed), with optional
-  Weights & Biases for RL training curves.
+ Weights & Biases for RL training curves.
 - **Docs host:** GitHub Pages via MkDocs Material.
 - **Build cadence:** an early vertical slice (core → PN → benchmark) before broadening across
-  paradigms, fidelity, and scale.
+ paradigms, fidelity, and scale.
 

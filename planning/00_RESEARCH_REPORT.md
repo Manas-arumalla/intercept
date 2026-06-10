@@ -80,7 +80,7 @@ CV/CA/CT propagation: **trivial**. IMM: **medium** (bank + mixing logic). Learni
 
 ## 3. Target Tracking & State Estimation
 
-### How it works  **[textbook-standard: Bar-Shalom "Estimation with Applications to Tracking and Navigation"; not independently verified in this batch]**
+### How it works **[textbook-standard: Bar-Shalom "Estimation with Applications to Tracking and Navigation"; not independently verified in this batch]**
 - **EKF** — linearizes nonlinear measurement/motion models via Jacobians.
 - **UKF** — unscented transform (sigma points); better for strong nonlinearity, no Jacobians.
 - **Particle filter (PF)** — sample-based, handles non-Gaussian/multimodal posteriors; expensive.
@@ -101,7 +101,7 @@ EKF/UKF: **low** (FilterPy or hand-rolled). PF: **medium**. JPDA: **medium-high*
 
 ## 4. Sensor Fusion
 
-### How it works  **[textbook-standard; not independently verified in this batch]**
+### How it works **[textbook-standard; not independently verified in this batch]**
 - **Measurement models:** radar (range, range-rate, azimuth/elevation), IR/EO (angles-only — bearing, no range). Angles-only tracking is a classic hard problem.
 - **Centralized fusion** — all measurements to one filter (optimal if model correct). **Distributed/decentralized fusion** — local tracks fused at a center.
 - **Covariance Intersection (CI)** — fuses estimates with unknown cross-correlation without double-counting information (consistent but conservative).
@@ -210,7 +210,7 @@ Modern GNC research, constrained terminal-guidance, impact-angle/time control. A
 
 ## 10. Uncertainty-Aware Decision Making
 
-### How it works  **[textbook-standard; not independently verified in this batch]**
+### How it works **[textbook-standard; not independently verified in this batch]**
 - **POMDPs** — decision-making under partial observability (belief-state MDP); solved approximately (POMCP, DESPOT, SARSOP; `POMDPs.jl`).
 - **Robust / chance-constrained control** — guarantee constraints under bounded/probabilistic uncertainty (e.g., keep P[miss < r] ≥ 1−ε).
 - **Belief-space planning** — plan over distributions of states rather than point states.
@@ -280,7 +280,7 @@ Receding-horizon: comes "for free" with MPC (§9). Event-triggered: **low** add-
 | **`hj_reachability` / `optimized_dp`** | HJ reachability / differential games | GPU-capable, grid-bound (§7) [textbook-standard] |
 | **PyVista / Plotly / Matplotlib** | 3D / interactive / publication viz | Visualization stack [textbook-standard] |
 
-## B. Standard Evaluation Metrics  [partly textbook-standard; Zarchan SGS paper & arXiv 1906.02113 in source set]
+## B. Standard Evaluation Metrics [partly textbook-standard; Zarchan SGS paper & arXiv 1906.02113 in source set]
 - **Miss distance** (primary; closest approach) and **terminal miss CEP**.
 - **Probability of intercept / kill (P_k)** — Monte-Carlo success rate over randomized engagements.
 - **Time-to-intercept** and **flight time**.
@@ -288,7 +288,7 @@ Receding-horizon: comes "for free" with MPC (§9). Event-triggered: **low** add-
 - **Capture region / launch envelope** — set of initial geometries from which intercept succeeds (kinematic boundary). 
 - **Robustness** — success vs target maneuver level (g), sensor noise, latency.
 
-## C. Validation / Benchmarking Methodology  [textbook-standard: Zarchan Monte-Carlo guidance analysis]
+## C. Validation / Benchmarking Methodology [textbook-standard: Zarchan Monte-Carlo guidance analysis]
 - **Monte-Carlo over engagement geometries** (randomized initial range, aspect angle, target maneuver, noise) → success-rate statistics with confidence intervals.
 - **Capture-region sweeps** — grid over initial conditions, map success/failure boundary.
 - **Ablation studies** — isolate the effect of each component (e.g., estimation quality → guidance performance).
@@ -335,6 +335,6 @@ Receding-horizon: comes "for free" with MPC (§9). Event-triggered: **low** add-
 - Zhou, Wang & Liu, fixed-time cooperative guidance, *Proc. IMechE Part G* (2022) — https://journals.sagepub.com/doi/abs/10.1177/09544100211048043
 - propNav — https://github.com/gedeschaines/propNav
 - PettingZoo — https://github.com/Farama-Foundation/PettingZoo
-- CasADi — https://web.casadi.org/ ; acados — https://docs.acados.org/
+- CasADi — https://web.casadi.org/; acados — https://docs.acados.org/
 - Zarchan, Science & Global Security — https://scienceandglobalsecurity.org/archive/sgs08zarchan.pdf
 - Eval/methodology & emerging-direction sources — arXiv 1906.02113, 2511.02526, 2508.00641, 2508.06520; Wiley RNC 70029; Tandfonline 2024.2355023; NASA TM-109057; ScienceDirect S100093611930247X

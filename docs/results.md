@@ -2,7 +2,7 @@
 
 A consolidated digest of the project's headline findings, with the figure and experiment behind
 each. Every result is reproducible: experiments are seeded and write to `gallery/` (figures) and
-`results/` (CSVs). Numbers below are from the development log ([progress](progress/PROGRESS.md)) and
+`results/` (CSVs). Numbers below are from the development log and
 the per-topic algorithm notes ([docs/algorithms/](algorithms/)).
 
 ## The thesis
@@ -100,18 +100,18 @@ interceptor launches ~Mach 1.2, boosts to ~Mach 3, then coasts to ~Mach 2.6 at t
 
 - Showcase: **INTERCEPT, miss 12.8 m, t = 11.5 s.**
 - Robustness (60 randomized trials over geometry + every maneuver parameter):
-  **P(intercept) = 1.00 (95 % CI [0.94, 1.00]),** median miss 13.7 m.
+ **P(intercept) = 1.00 (95 % CI [0.94, 1.00]),** median miss 13.7 m.
 
 Why the 3-D view looks near-straight: at supersonic speed a real "spiral" is a long *thin* helix, so
 maneuvering is shown via projections + an achieved-g-vs-turn-limit time history (the faithful way),
 not a faked corkscrew. Figures: `gallery/figures/p14_advanced_analysis.png`,
-`gallery/figures/p14_advanced_modern.png` / `.gif`. See [ADR-0010](adr/0010-realistic-speed-parity-no-cheat.md).
+`gallery/figures/p14_advanced_modern.png` / `.gif`..
 
 ## 11 · Residual RL guidance — resolving the realistic-plant RL failure
 
 From-scratch PPO collapses on the realistic (L2 aero) plant (constant saturated action, ~0–2 %
 intercept). **Residual policy learning** — the policy outputs a bounded *correction* on a PN/APN
-baseline ([ADR-0011](adr/0011-residual-rl-guidance.md)) — fixes it: a zero action is already PN, so
+baseline — fixes it: a zero action is already PN, so
 there is no collapse. Held-out (100 trials/scenario), P(intercept):
 
 | Scenario | Recurrent APN-residual | Residual-PN (MLP) | True PN | Augmented PN | Sliding-mode | From-scratch PPO |
@@ -132,7 +132,7 @@ the realistic plant's hardest case, with sliding-mode still leading. Figures:
 
 ## 12 · 3-D benchmark — intelligence beats speed, in 3-D
 
-The benchmark extends to 3-D ([ADR-0012](adr/0012-three-dimensional-benchmark.md)) via
+The benchmark extends to 3-D via
 `ParametricScenario3D` (same `EngagementSpec`, unchanged runner/metrics), comparing **True PN-3D,
 Augmented PN-3D, Optimal (OGL-3D), and Sliding-mode (SMG-3D)**. On a graded 3-D suite, a sustained
 **barrel-roll defeats True PN-3D (0.00)** while the smarter laws hold **1.00**; the intensifying
@@ -142,8 +142,7 @@ Optimal **0.98** → Sliding-mode **1.00** — the 3-D analogue of §7. Figure
 
 ## 13 · 3-D estimation
 
-Dimension-generic motion models + EKF/UKF/**IMM** and a `Radar3D` (range/az/el)
-([ADR-0013](adr/0013-three-dimensional-estimation.md)). Tracking a 3-D barrel-rolling target, the
+Dimension-generic motion models + EKF/UKF/**IMM** and a `Radar3D` (range/az/el). Tracking a 3-D barrel-rolling target, the
 **CV/CA IMM tracks best (~42 m)** vs the NCA UKF **~52 m** and the NCV EKF **~71 m** (stuck at the
 raw-measurement floor) — the 3-D analogue of §3. Figure `gallery/figures/p18_estimation_3d.png`.
 
@@ -158,7 +157,7 @@ makes trials paired — `paired_bootstrap`). Highlights (150 trials/cell): 2-D L
 
 ## 15 · 3-D RL guidance (every paradigm now in 3-D)
 
-The RL centerpiece lifted to 3-D ([ADR-0014](adr/0014-three-dimensional-rl.md)): `InterceptionEnv3D`
+The RL centerpiece lifted to 3-D: `InterceptionEnv3D`
 (2-DOF lateral action, 3-D observation) + `RLGuidance3D`. From-scratch 3-D PPO **collapses** exactly
 as in 2-D (held out **0.00/0.00/0.00**, constant saturated action); **residual-PN-3D** resolves it
 (**1.00 / 0.91 / 0.98** crossing/weave/barrel), and a **recurrent (LSTM) APN-residual** (P23) closes
@@ -170,7 +169,7 @@ EKF/UKF/IMM estimation and a 3-D sense→estimate→guide loop. Figures `gallery
 
 ## 16 · Adversarial-RL evader (a learned adversary)
 
-`EvaderEnv` + `RLEvader` ([ADR-0015](adr/0015-adversarial-rl-evader.md)): the agent is the *target*,
+`EvaderEnv` + `RLEvader`: the agent is the *target*,
 trained to maximize the interceptor's miss against a True-PN pursuer. Held-out (150 paired
 geometries), P(intercept) by the interceptor:
 
@@ -190,7 +189,7 @@ exploits the *specific* law it trained against, and this independently confirms 
 
 ## 17 · Cooperative salvo (impact-time-control guidance)
 
-`ImpactTimeGuidance` ([ADR-0016](adr/0016-impact-time-salvo-guidance.md)) steers each interceptor to a
+`ImpactTimeGuidance` steers each interceptor to a
 commanded impact time via biased PN. A 4-interceptor battery launched from different ranges/bearings
 arrives **within 0.19 s** of the commanded time against a visibly weaving (~8 g serpentine) inbound
 threat — vs a **0.57 s** natural spread — all
@@ -200,8 +199,7 @@ intercepting: a synchronized salvo that saturates the defense at once. Figures `
 ## 18 · Two-sided self-play (one arms-race round)
 
 The learned evader (§16) defeats True PN (0.07) and challenges Augmented PN (0.71). Training a fresh
-interceptor **against that evader** (`InterceptionEnv(opponent=RLEvader(...))`,
-[ADR-0017](adr/0017-self-play-round.md)) **hardens** it: held-out vs the frozen evader, the gen-1
+interceptor **against that evader** (`InterceptionEnv(opponent=RLEvader(..))`) **hardens** it: held-out vs the frozen evader, the gen-1
 interceptor intercepts **0.80** — beating both PN (0.07) and APN (0.71). One detail: this works
 only with a *competent* (APN) baseline; a residual on the failing PN baseline stayed at 0.05 — the
 "residual needs a competent base" lesson again. Figure `gallery/figures/p25_selfplay.png`.
@@ -213,13 +211,12 @@ sense→estimate→guide loop in 3-D against a maneuvering target at realistic s
 P(intercept) 1.00, ~20 m miss). An `INSError` platform model (the seeker measures true geometry; the
 filter uses the *believed* platform position) degrades the miss **gracefully and monotonically** —
 ≈20 → 54 → 80 → 132 → 245 m as INS drift grows 0 → 20 m/s
-([ADR-0019](adr/0019-ins-platform-error-and-3d-imm-loop.md), figure
+(figure
 `gallery/figures/p26_estimation_advanced.png`).
 
 ## 20 · Converged self-play — a non-transitive arms race
 
-Continuing the self-play to a second round and tabulating the full cross-table
-([ADR-0020](adr/0020-converged-self-play.md)) exposes the classic instability of single-step
+Continuing the self-play to a second round and tabulating the full cross-table exposes the classic instability of single-step
 alternation. P(intercept) by the interceptor (150 trials):
 
 | interceptor \ evader | Eva gen-0 | Eva gen-1 |
@@ -238,8 +235,7 @@ gen-0 (0.80 → 0.18); evader gen-1, overfit to beating gen-1, becomes *more* ca
 ## 21 · Diverse-threat swarm-vs-swarm (a saturating raid, defended)
 
 A defended point is attacked by a **two-wave raid of 12 threats across 6 distinct realistic profiles** — cruise-weave,
-sea-skimming pop-up, lofted-ballistic, terminal-spiral, diving-jink, boost-glide
-([`adversary.threats`](adr/0021-diverse-threat-swarm.md)) — and defended by **12 interceptors** with
+sea-skimming pop-up, lofted-ballistic, terminal-spiral, diving-jink, boost-glide — and defended by **12 interceptors** with
 Augmented-PN-3D guidance + Hungarian WTA (now 3-D-aware). Result: **12/12 intercepted, 0 leakers** at
 realistic comparable speeds (threats ~Mach 2, interceptors ~Mach 3). Building this fixed a latent
 2-D-only WTA bug (assignment now dimension-generic). Cinematic
@@ -247,7 +243,7 @@ realistic comparable speeds (threats ~Mach 2, interceptors ~Mach 3). Building th
 
 ## 22 · MARL cooperative swarm — learned vs. analytic allocation
 
-A centralized policy (`CentralizedSwarmEnv`, [ADR-0022](adr/0022-marl-cooperative-swarm.md)) learns
+A centralized policy (`CentralizedSwarmEnv`) learns
 to allocate **3 interceptors over 5 inbound threats** (under-resourced, so coordination matters),
 compared head-to-head on identical seeds with the Hungarian WTA and random. Mean leakers (200
 trials): Random **0.98**, **Learned (MARL) 0.69**, Hungarian **0.65**. The learned allocator
@@ -257,9 +253,10 @@ baseline and far beating random — it approaches but does not beat the optimum.
 
 ## 23 · Population self-play — fixing the forgetting
 
-The ADR-0020 catastrophic forgetting (interceptor gen-2 forgot evader gen-0: 0.80→0.18) is addressed
-by **fictitious play** — training against a *pool* of past evaders sampled per episode
-(`InterceptionEnv(opponent_factory=...)`, [ADR-0023](adr/0023-population-self-play.md)). The
+The catastrophic forgetting seen under alternating self-play (interceptor gen-2 forgot evader gen-0:
+0.80→0.18) is addressed by **fictitious play** — training against a *pool* of past evaders sampled
+per episode
+(`InterceptionEnv(opponent_factory=...)`). The
 pool-trained interceptor recovers the hard gen-0 to **0.78** (vs gen-2's **0.18**), on par with the
 single-round gen-1 (0.80); it trades a little on the easy gen-1 (0.59), so worst-case min 0.59 — well
 above the forgetting gen-2. An engineering finding worth recording: per-episode opponent switching makes
@@ -271,7 +268,7 @@ heavier next step. Figure `gallery/figures/p30_population_selfplay.png`.
 
 Every seeded engagement is a match (intercept ⇒ law wins; escape ⇒ evader wins); a **Bradley-Terry**
 fit over the full round-robin (8 laws × 6 evaders × 40 paired geometries, realistic ~Mach 3 vs
-~Mach 2) places everything on one Elo scale ([ADR-0025](adr/0025-intercept-league-elo.md)).
+~Mach 2) places everything on one Elo scale.
 **Sliding-mode is the champion (2214)**; the **game-theoretic anti-LOS evader (2019) out-rates every
 other law** — the #2 player is a *target*; the learned recurrent APN-residual (1681) sits above the
 whole PN family (1310–1423); scripted evaders bottom out (719). The fit predicts unplayed pairings
@@ -282,9 +279,9 @@ skill-rating ladder for guidance laws — a novel benchmark framing. Figure
 ## 25 · Training RL on estimated observations — noise-robustness you can measure
 
 `InterceptionEnv(sensor=..., estimator_factory=...)` trains the policy on a seeker→EKF *estimate*
-(reward/intercept stay truth) — closing the ADR-0005 gap. The clean ablation (same weave scenario,
-budget, architecture; only the observation source differs,
-[ADR-0024](adr/0024-rl-trained-on-estimated-observations.md)): as seeker noise grows to σ=200 m, the
+(reward/intercept stay truth) — so the policy learns against the noise it will face at deploy time.
+The clean ablation (same weave scenario,
+budget, architecture; only the observation source differs): as seeker noise grows to σ=200 m, the
 **estimate-trained policy holds 0.99/0.98/0.88** while its **truth-trained twin degrades to
 0.97/0.90/0.69** — a 19-point robustness gap earned purely by training under noise. Notes: on
 a *straight* target the effect vanishes (the EKF erases the noise), and plain PN-on-estimate remains
@@ -292,7 +289,7 @@ the most noise-robust policy on this scenario. Figure `gallery/figures/p31_rl_es
 
 ## 26 · Mode-adaptive guidance — the estimator's belief flies the missile
 
-`ModeAdaptiveGuidance` ([ADR-0026](adr/0026-mode-adaptive-guidance.md)) blends True PN and Augmented
+`ModeAdaptiveGuidance` blends True PN and Augmented
 PN by the IMM's **maneuver-mode probability** (sharpened, γ=3). Against a realistic threat — a light
 ~4 g weaving cruise, then a sustained 20 g break — the IMM must discriminate the benign weave from
 the real maneuver. Monte-Carlo (60 paired geometries, ~Mach 3 vs ~Mach 2): on a *light* 4 g weave, PN 0.52 @ 79k,
@@ -307,7 +304,7 @@ always-on APN (detection lag ≈ 0.8 s). Figure `gallery/figures/p33_mode_adapti
 
 A 30 g break toward an **unpredictable side** at 1.8 km defeats True PN on both branches — and a
 **redundant** PN pair is exactly as dead (identical laws ⇒ correlated failures: 0.00). The **pincer
-pair** ([ADR-0027](adr/0027-pincer-coverage-guidance.md)) splits the approach via side-offset
+pair** splits the approach via side-offset
 virtual aim-points that taper off before the endgame. On a clean cruise the coverage is **perfect —
 P(≥1) = 1.00, every kill taken by the interceptor covering that side** — the robustness an APN pair
 buys with its acceleration feedforward, achieved with plain PN and *no acceleration estimate at
@@ -319,8 +316,7 @@ matched to the break envelope (narrow β window). Figure
 ## 28 · Coordinated swarm penetration vs. an asset-value defense
 
 Real swarms don't just bring *more* missiles — they **coordinate** to defeat the defender's logic.
-Four literature-grounded tactics ([ADR-0028](adr/0028-swarm-penetration-and-asset-value-defense.md),
-`intercept.adversary.swarm_tactics`): simultaneous **time-on-target**, **decoy screens**,
+Four literature-grounded tactics (`intercept.adversary.swarm_tactics`): simultaneous **time-on-target**, **decoy screens**,
 **concentrated saturation points**, and **sequential waves**. The counter
 (`intercept.multiagent.defense`) is an **asset-value layered defense**: impact-point prediction →
 decoy de-prioritization → value-prioritized, capacity-aware allocation. Against a 5-interceptor
@@ -344,15 +340,17 @@ and floors for a decoy (classical constant-bearing / track-history reasoning). F
 `gallery/figures/p35_tactics_gallery.png` (each tactic's engagement); GIFs
 `gallery/animations/p35_swarm_penetration.gif` and `gallery/animations/p35_tot_raid.gif`.
 
-## Open limitations
+## Scope & open limitations
 
-See [limitations.md](limitations.md) for the full scope-vs-open account. In brief:
+INTERCEPT is simulation-only: point-mass / kinematic models and public textbook algorithms, with no
+hardware, real targeting/sensor data, munitions modeling, or detection-evasion content. Within that
+scope, the genuine open items are:
 
 - **RL on the realistic plant:** the from-scratch collapse is *resolved* by residual RL (§11), and
-  the recurrent APN-residual now *beats* True PN and Augmented PN on the unpredictable jink (0.95),
-  trailing only the robust sliding-mode (1.00). Closing that last gap (deeper/longer training, OGL
-  baseline, reactive-break scenarios) is future work.
+ the recurrent APN-residual now *beats* True PN and Augmented PN on the unpredictable jink (0.95),
+ trailing only the robust sliding-mode (1.00). Closing that last gap (deeper/longer training, OGL
+ baseline, reactive-break scenarios) is future work.
 - Models are point-mass (no 6-DOF / thrust-vector control); aero curves are representative
-  (Zarchan-grounded), not flight-validated.
+ (Zarchan-grounded), not flight-validated.
 - The benchmark Monte-Carlo now supports L3 (`model="realistic"`); the scenario class and the
-  estimator suite are still 2-D — a 3-D Monte-Carlo benchmark + 3-D estimation are tracked follow-ups.
+ estimator suite are still 2-D — a 3-D Monte-Carlo benchmark + 3-D estimation are tracked follow-ups.

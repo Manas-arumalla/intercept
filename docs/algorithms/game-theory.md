@@ -1,7 +1,7 @@
 # Pursuit-evasion game theory (Apollonius circle & optimal evasion)
 
-Modules: [`intercept/guidance/game.py`](../../intercept/guidance/game.py),
-[`intercept/adversary/optimal_evader.py`](../../intercept/adversary/optimal_evader.py).
+Modules: [`intercept/guidance/game.py`](./../intercept/guidance/game.py),
+[`intercept/adversary/optimal_evader.py`](./../intercept/adversary/optimal_evader.py).
 
 ## Apollonius circle
 
@@ -11,7 +11,7 @@ faster pursuer reach simultaneously: `|X − E| / |X − P| = α`, where `α = v
 returns `(center, radius)`:
 
 ```
-center = (E − α²·P) / (1 − α²),   radius² = |center|² − (|E|² − α²|P|²)/(1 − α²)
+center = (E − α²·P) / (1 − α²), radius² = |center|² − (|E|² − α²|P|²)/(1 − α²)
 ```
 
 `intercept_point(P, E, V, v_P)` solves the intercept triangle `|E + V·t − P| = v_P·t` for the
@@ -36,19 +36,19 @@ smarter adversary than the open-loop scripted weave/jink.
 ## Results (P6 demo)
 
 - **Apollonius diagram** (`gallery/figures/p6_apollonius.png`): pursuer, evader (with velocity), dominance
-  circle, and the predicted capture point on its boundary.
+ circle, and the predicted capture point on its boundary.
 - **Evader robustness vs. True PN** (`gallery/figures/p6_evader_robustness.png`, 150 trials each): in a
-  pursuer-dominant regime every adversary is intercepted (P ≈ 1.0), so the differentiator is
-  **time-to-intercept** — the game-theoretic optimal evader stretches capture to **≈8.7 s vs ≈3.6 s**
-  for straight/weave/jink. A subtle, correct finding: against an acceleration-limited PN, the
-  *optimal (simple-motion) evader maximizes capture time*, whereas weave/jink target *miss distance*;
-  in a low-authority regime those instead drive intercept probability down. The two notions of
-  "hardest adversary" differ — exactly the kind of nuance the platform makes measurable.
+ pursuer-dominant regime every adversary is intercepted (P ≈ 1.0), so the differentiator is
+ **time-to-intercept** — the game-theoretic optimal evader stretches capture to **≈8.7 s vs ≈3.6 s**
+ for straight/weave/jink. A subtle, correct finding: against an acceleration-limited PN, the
+ *optimal (simple-motion) evader maximizes capture time*, whereas weave/jink target *miss distance*;
+ in a low-authority regime those instead drive intercept probability down. The two notions of
+ "hardest adversary" differ — exactly the kind of nuance the platform makes measurable.
 
 ## Notes / extensions
 
 - The pursuer's straight-line prediction is exact only for a non-maneuvering evader (re-planned each
-  step otherwise). Full HJ-reachability / value-function solutions are a heavier future extension.
+ step otherwise). Full HJ-reachability / value-function solutions are a heavier future extension.
 - **Adversarial-RL self-play** (training an evader against the interceptor, and co-evolution) is the
-  natural next step — the env and `Controller` contract already support an RL evader; deferred to a
-  later iteration.
+ natural next step — the env and `Controller` contract already support an RL evader; deferred to a
+ later iteration.
