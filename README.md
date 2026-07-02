@@ -1,15 +1,13 @@
 # INTERCEPT
 
 <p align="left">
+ <a href="https://github.com/Manas-arumalla/intercept/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/Manas-arumalla/intercept/actions/workflows/ci.yml/badge.svg"></a>
+ <a href="https://github.com/Manas-arumalla/intercept/actions/workflows/docs.yml"><img alt="Docs" src="https://github.com/Manas-arumalla/intercept/actions/workflows/docs.yml/badge.svg"></a>
  <img alt="Python 3.10+" src="https://img.shields.io/badge/python-3.10%2B-blue">
  <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green">
- <img alt="Tests" src="https://img.shields.io/badge/tests-199%20passing-brightgreen">
  <img alt="Lint" src="https://img.shields.io/badge/lint-ruff-blueviolet">
  <img alt="Typed" src="https://img.shields.io/badge/typed-PEP%20561-3776AB">
- <img alt="Docs" src="https://img.shields.io/badge/docs-mkdocs--material-526CFE">
  <img alt="RL" src="https://img.shields.io/badge/RL-PPO%20%7C%20RecurrentPPO-orange">
- <!-- Once the repository is on GitHub, enable the live CI badge:
- [![CI](https://github.com/Manas-arumalla/intercept/actions/workflows/ci.yml/badge.svg)](https://github.com/Manas-arumalla/intercept/actions/workflows/ci.yml) -->
 </p>
 
 **A research-grade, reproducible benchmark that puts classical, optimal, game-theoretic, and
