@@ -41,6 +41,7 @@ nav:
   - Home: index.md
   - Results digest: results.md
   - Benchmark methodology: benchmarks/methodology.md
+  - Elo methodology: elo-methodology.md
   - Algorithms:
       - Proportional Navigation: algorithms/proportional-navigation.md
       - Optimal & MPC: algorithms/optimal-mpc-guidance.md

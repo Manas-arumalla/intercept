@@ -73,3 +73,76 @@ def bradley_terry(
 def elo_expected_score(r_a: float, r_b: float) -> float:
     """Expected win probability of ``a`` vs ``b`` under the fitted Elo ratings."""
     return 1.0 / (1.0 + 10.0 ** ((r_b - r_a) / 400.0))
+
+
+def bradley_terry_bootstrap(
+    names: list[str],
+    pairing_outcomes: dict[tuple[str, str], list[bool]],
+    *,
+    n_replicates: int = 1000,
+    confidence: float = 0.95,
+    eps: float = 0.5,
+    rng: np.random.Generator | None = None,
+) -> dict[str, tuple[float, float]]:
+    """Non-parametric bootstrap confidence intervals on Bradley-Terry Elo ratings.
+
+    For each replicate, resamples every (pursuer, evader) pairing's match outcomes
+    *with replacement*, rebuilds the win-count matrix, and refits BT. The reported
+    interval is the ``(alpha/2, 1-alpha/2)``-percentile across replicates.
+
+    Parameters
+    ----------
+    names:
+        All participant names (length ``n``).
+    pairing_outcomes:
+        ``{(pursuer_name, evader_name): [True, False, ...]}`` — per-pairing binary
+        match outcomes (``True`` = pursuer/guidance-law intercepted).
+    n_replicates:
+        Bootstrap replicates; 1 000 gives stable 95 % CIs.
+    confidence:
+        CI level (default 0.95 → 2.5th–97.5th percentile).
+    eps:
+        Additive smoothing forwarded to :func:`bradley_terry`.
+    rng:
+        Seeded generator for reproducibility; ``None`` → ``np.random.default_rng()``.
+
+    Returns
+    -------
+    dict
+        ``name -> (ci_lo, ci_hi)`` Elo rating bounds.
+    """
+    if rng is None:
+        rng = np.random.default_rng()
+    idx = {nm: i for i, nm in enumerate(names)}
+    n = len(names)
+    alpha = 1.0 - confidence
+    rep_ratings: dict[str, list[float]] = {nm: [] for nm in names}
+
+    for _ in range(n_replicates):
+        W = np.zeros((n, n))
+        for (pname, ename), results in pairing_outcomes.items():
+            if not results:
+                continue
+            pi = idx.get(pname)
+            ei = idx.get(ename)
+            if pi is None or ei is None:
+                continue
+            m = len(results)
+            arr = np.asarray(results, dtype=bool)
+            sample_idx = rng.integers(0, m, size=m)
+            n_wins = int(arr[sample_idx].sum())
+            W[pi, ei] += n_wins
+            W[ei, pi] += m - n_wins
+        elo_rep = bradley_terry(names, W, eps=eps)
+        for nm, r in elo_rep.items():
+            rep_ratings[nm].append(r)
+
+    lo_pct = alpha / 2 * 100.0
+    hi_pct = (1.0 - alpha / 2) * 100.0
+    return {
+        nm: (
+            float(np.percentile(rep_ratings[nm], lo_pct)),
+            float(np.percentile(rep_ratings[nm], hi_pct)),
+        )
+        for nm in names
+    }

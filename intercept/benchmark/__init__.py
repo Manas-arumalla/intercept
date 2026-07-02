@@ -8,7 +8,7 @@ invariant holds throughout: all algorithms share dynamics, noise, and per-trial 
 """
 
 from intercept.benchmark.capture_region import CaptureRegion, compute_capture_region
-from intercept.benchmark.league import bradley_terry, elo_expected_score
+from intercept.benchmark.league import bradley_terry, bradley_terry_bootstrap, elo_expected_score
 from intercept.benchmark.metrics import (
     MetricSummary,
     PairedComparison,
@@ -58,5 +58,6 @@ __all__ = [
     "compute_capture_region",
     "CaptureRegion",
     "bradley_terry",
+    "bradley_terry_bootstrap",
     "elo_expected_score",
 ]

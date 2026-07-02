@@ -58,6 +58,21 @@ wins the league**, the **game-theoretic evader out-rates every other guidance la
 the #2 player overall), learned laws sit mid-table, and scripted evaders fall to the bottom. The fit
 also predicts unplayed match-ups (`elo_expected_score`). Reproduce: `python experiments/p32_league.py`.
 
+Ratings include **95 % bootstrap confidence intervals** (1 000 match-level resamples); adjacent
+entries with overlapping CIs are flagged as statistical ties. A **rank-stability heatmap** checks
+whether each law's position holds across scenario subsets — head-on vs. crossing geometry, scripted
+vs. adversarial evaders — so a scenario-specific strength shows up rather than being averaged away.
+
+> **How the ladder is computed** — round-robin tournament (every guidance law vs every adversary,
+> 40 matched engagements per pairing, same seeded geometries for all pairings, shared L2 dynamics).
+> Bradley-Terry MM fit; Elo-scale output (mean 1500). See
+> [docs/elo-methodology.md](docs/elo-methodology.md) for the full pairing protocol, BT formulation,
+> smoothing, bootstrap procedure, and sensitivity analysis design.
+
+<p align="center">
+ <img src="gallery/figures/p32_rank_stability.png" width="55%" alt="Rank-stability heatmap: each guidance law's rank across scenario subsets"/>
+</p>
+
 ## Why this project
 
 Comparisons between guidance paradigms — Proportional Navigation, optimal/geometric laws,
@@ -84,7 +99,7 @@ Across six paradigms, three fidelity levels, 2-D and 3-D, single- and many-vs-ma
 | **Multi-agent** | Hungarian weapon-target assignment · N-vs-M area defense with live re-assignment · diverse-threat swarm raid (6 realistic trajectory profiles) · **learned (MARL) cooperative allocation** · **coordinated swarm-penetration tactics (time-on-target / decoy-screen / saturation-point / waves) + asset-value layered-defense counter** |
 | **Benchmark** | YAML scenario suite (2-D **and** 3-D) · seeded Monte-Carlo (fairness invariant) · Wilson-CI metrics · **paired-bootstrap significance** · capture-region sweeps · publication-quality figures + animations |
 
-**199 unit/property/regression tests passing · `ruff`-clean · fully type-hinted (`mypy` runs in CI).**
+**203 unit/property/regression tests passing · `ruff`-clean · fully type-hinted (`mypy` runs in CI).**
 
 ## Headline results
 
