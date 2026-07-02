@@ -295,11 +295,12 @@ def scenario_sensitivity(
 def _figure_ladder(board, pursuers, ci, show: bool) -> None:
     """Horizontal bar chart with 95 % bootstrap CI error bars."""
     names = [nm for nm, _ in board][::-1]
-    vals = [board_dict[nm] for nm in names]
+    elo = dict(board)
+    vals = [elo[nm] for nm in names]
     colors = ["#1f9ede" if nm in pursuers else "#d6453d" for nm in names]
 
-    xerr_lo = [board_dict[nm] - ci[nm][0] for nm in names]
-    xerr_hi = [ci[nm][1] - board_dict[nm] for nm in names]
+    xerr_lo = [elo[nm] - ci[nm][0] for nm in names]
+    xerr_hi = [ci[nm][1] - elo[nm] for nm in names]
 
     fig, ax = plt.subplots(figsize=(9.5, 6.8))
     y_pos = np.arange(len(names))
@@ -407,8 +408,6 @@ def main() -> None:
     pursuers, evaders, elo, pint, match_log, pairing_outcomes = run_league(args.trials, args.seed)
     all_names = list(pursuers) + list(evaders)
 
-    global board_dict
-    board_dict = elo
     board = sorted(elo.items(), key=lambda kv: -kv[1])
 
     # --- Bootstrap confidence intervals ---

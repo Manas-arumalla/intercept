@@ -1,15 +1,15 @@
-participant,side,elo
-Sliding-mode,guidance,2213.6
-optimal (anti-LOS),evader,2018.7
-Optimal (OGL),guidance,1917.4
-Augmented PN,guidance,1870.9
-RL recurrent APN-res,guidance,1681.1
-reactive break 25g,evader,1570.8
-RL evader,evader,1536.7
-RL residual-PN,guidance,1530.4
-Pure PN,guidance,1422.7
-True PN,guidance,1309.5
-ZEM PN,guidance,1309.5
-telegraph jink 22g,evader,1180.3
-straight,evader,719.2
-weave 18g,evader,719.2
+participant,side,elo,ci_lo,ci_hi
+Sliding-mode,guidance,2213.6,2126.0,2333.6
+optimal (anti-LOS),evader,2018.7,1961.3,2089.2
+Optimal (OGL),guidance,1917.4,1845.6,1992.1
+Augmented PN,guidance,1870.9,1812.5,1939.3
+RL recurrent APN-res,guidance,1681.1,1634.0,1735.1
+reactive break 25g,evader,1570.8,1549.1,1592.8
+RL evader,evader,1536.7,1490.9,1581.2
+RL residual-PN,guidance,1530.4,1466.7,1592.2
+Pure PN,guidance,1422.7,1368.5,1470.6
+True PN,guidance,1309.5,1255.6,1354.8
+ZEM PN,guidance,1309.5,1257.5,1350.6
+telegraph jink 22g,evader,1180.3,1106.2,1240.6
+straight,evader,719.2,689.5,739.3
+weave 18g,evader,719.2,689.5,739.3
